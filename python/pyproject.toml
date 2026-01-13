@@ -1,0 +1,44 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "bec_messages"
+version = "1.0.0"
+description = "BEC Message Models"
+requires-python = ">=3.11"
+classifiers = [
+    "Development Status :: 3 - Alpha",
+    "Programming Language :: Python :: 3",
+    "Topic :: Scientific/Engineering",
+]
+dependencies = ["numpy>=1.24, <3.0", "pydantic~=2.8, <2.12.0"]
+license = "BSD-3-Clause"
+
+
+[project.optional-dependencies]
+dev = ["black~=25.0", "isort~=5.13, >=5.13.2", "typer~=0.15"]
+
+[project.scripts]
+bec-plugin-manager = "bec_messages._build_schema:main"
+
+[project.urls]
+"Bug Tracker" = "https://github.com/bec-project/bec_messages/issues"
+Homepage = "https://github.com/bec-project/bec_messages"
+
+[tool.hatch.build.targets.wheel]
+include = ["*"]
+
+[tool.hatch.metadata]
+allow-direct-references = true
+
+[tool.black]
+line-length = 100
+skip-magic-trailing-comma = true
+
+[tool.isort]
+profile = "black"
+line_length = 100
+multi_line_output = 3
+include_trailing_comma = true
+known_first_party = ["bec_lib", "bec_server", "bec_ipython_client"]
