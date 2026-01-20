@@ -5,11 +5,14 @@ import time
 import uuid
 from copy import deepcopy
 from enum import Enum, auto
-from typing import Any, ClassVar, Literal, Self
+from typing import Annotated, Any, ClassVar, Literal, Self
 from uuid import uuid4
 
 import numpy as np
-from pydantic import BaseModel, ConfigDict, Field, ValidationError, field_validator, model_validator
+from pydantic import BaseModel, ConfigDict, Field, field_validator, model_validator
+from pydantic import WithJsonSchema
+
+NumpyField = Annotated[np.ndarray, WithJsonSchema({"type": "bytes"})]
 
 
 class ProcedureWorkerStatus(Enum):
@@ -653,7 +656,8 @@ class DeviceMonitor2DMessage(BECMessage):
 
     msg_type: ClassVar[str] = "device_monitor2d_message"
     device: str
-    data: np.ndarray
+    data: NumpyField
+
     timestamp: float = Field(default_factory=time.time)
 
     metadata: dict = Field(default_factory=dict)
@@ -694,7 +698,7 @@ class DeviceMonitor1DMessage(BECMessage):
 
     msg_type: ClassVar[str] = "device_monitor1d_message"
     device: str
-    data: np.ndarray
+    data: NumpyField
     timestamp: float = Field(default_factory=time.time)
 
     metadata: dict = Field(default_factory=dict)
@@ -734,7 +738,7 @@ class DevicePreviewMessage(BECMessage):
     msg_type: ClassVar[str] = "device_preview_message"
     device: str
     signal: str
-    data: np.ndarray
+    data: NumpyField
     timestamp: float = Field(default_factory=time.time)
     # Needed for pydantic to accept numpy arrays
     model_config = ConfigDict(arbitrary_types_allowed=True)
