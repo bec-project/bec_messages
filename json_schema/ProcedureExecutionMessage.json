@@ -1,0 +1,49 @@
+{
+  "description": "Message type for sending procedure execution instructions to the scheduler\n\nSent by the  user to the procedure_request topic. It will be consumed by the scan server.\n    Args:\n        identifier (str): name of the procedure registered with the server\n        queue (str): the procedure queue this execution belongs to\n        args_kwargs (tuple[tuple[Any, ...], dict[str, Any]]): arguments for the procedure function",
+  "properties": {
+    "metadata": {
+      "additionalProperties": true,
+      "title": "Metadata",
+      "type": "object"
+    },
+    "identifier": {
+      "title": "Identifier",
+      "type": "string"
+    },
+    "queue": {
+      "title": "Queue",
+      "type": "string"
+    },
+    "args_kwargs": {
+      "default": [
+        [],
+        {}
+      ],
+      "maxItems": 2,
+      "minItems": 2,
+      "prefixItems": [
+        {
+          "items": {},
+          "type": "array"
+        },
+        {
+          "additionalProperties": true,
+          "type": "object"
+        }
+      ],
+      "title": "Args Kwargs",
+      "type": "array"
+    },
+    "execution_id": {
+      "title": "Execution Id",
+      "type": "string"
+    }
+  },
+  "required": [
+    "identifier",
+    "queue",
+    "execution_id"
+  ],
+  "title": "ProcedureExecutionMessage",
+  "type": "object"
+}

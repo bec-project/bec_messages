@@ -1,0 +1,25 @@
+{
+  "description": "Message for GUI instructions\n\nArgs:\n    action (str): Instruction to be executed by the GUI\n    metadata (dict, optional): Metadata. Defaults to None.",
+  "properties": {
+    "metadata": {
+      "additionalProperties": true,
+      "title": "Metadata",
+      "type": "object"
+    },
+    "action": {
+      "title": "Action",
+      "type": "string"
+    },
+    "parameter": {
+      "additionalProperties": true,
+      "title": "Parameter",
+      "type": "object"
+    }
+  },
+  "required": [
+    "action",
+    "parameter"
+  ],
+  "title": "GUIInstructionMessage",
+  "type": "object"
+}

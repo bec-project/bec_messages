@@ -1,0 +1,215 @@
+{
+  "description": "Message type for sending scan status updates.\n\nArgs:\n    scan_id (str): Unique scan ID\n    status (Literal[\"open\", \"paused\", \"aborted\", \"halted\", \"closed\"]) : Current scan status\n    scan_number (int, optional): Scan number\n    session_id (str, optional): Session ID\n    num_points (int, optional): Number of points in the scan. Only relevant if the number of points is determined by BEC.\n    scan_name (str, optional): Name of the scan, e.g. 'line_scan'\n    scan_type (Literal[\"step\", \"fly\"], optional): Type of scan\n    dataset_number (int, optional): Dataset number\n    scan_report_devices (list[str], optional): List of devices that are part of the scan report\n    user_metadata (dict, optional): User metadata\n    readout_priority (dict[Literal[\"monitored\", \"baseline\", \"async\", \"continuous\", \"on_request\"], list[str]], optional): Readout priority\n    scan_parameters (dict[Literal[\"exp_time\", \"frames_per_trigger\", \"settling_time\", \"readout_time\"] | str, Any], optional): Scan parameters such as exposure time, frames per trigger, settling time, readout time\n    request_inputs (dict[Literal[\"arg_bundle\", \"inputs\", \"kwargs\"], Any], optional): Scan input\n    info (dict): Dictionary containing additional information about the scan\n    timestamp (float, optional): Timestamp of the message. Defaults to time.time()\n\nExamples:\n    >>> ScanStatusMessage(scan_id=\"1234\", status=\"open\", info={\"positions\": {\"samx\": 0.5, \"samy\": 0.5}})",
+  "properties": {
+    "metadata": {
+      "additionalProperties": true,
+      "title": "Metadata",
+      "type": "object"
+    },
+    "scan_id": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "title": "Scan Id"
+    },
+    "status": {
+      "enum": [
+        "open",
+        "paused",
+        "aborted",
+        "halted",
+        "closed"
+      ],
+      "title": "Status",
+      "type": "string"
+    },
+    "scan_number": {
+      "anyOf": [
+        {
+          "type": "integer"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Scan Number"
+    },
+    "session_id": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Session Id"
+    },
+    "num_points": {
+      "anyOf": [
+        {
+          "type": "integer"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "description": "Number of points in the scan. Only relevant if the number of points is determined by BEC.",
+      "title": "Num Points"
+    },
+    "scan_name": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "description": "Name of the scan, e.g. 'line_scan'",
+      "title": "Scan Name"
+    },
+    "scan_type": {
+      "anyOf": [
+        {
+          "enum": [
+            "step",
+            "fly"
+          ],
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "description": "Type of scan",
+      "title": "Scan Type"
+    },
+    "dataset_number": {
+      "anyOf": [
+        {
+          "type": "integer"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Dataset Number"
+    },
+    "scan_report_devices": {
+      "anyOf": [
+        {
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Scan Report Devices"
+    },
+    "user_metadata": {
+      "anyOf": [
+        {
+          "additionalProperties": true,
+          "type": "object"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "User Metadata"
+    },
+    "readout_priority": {
+      "anyOf": [
+        {
+          "additionalProperties": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array"
+          },
+          "propertyNames": {
+            "enum": [
+              "monitored",
+              "baseline",
+              "async",
+              "continuous",
+              "on_request"
+            ]
+          },
+          "type": "object"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Readout Priority"
+    },
+    "scan_parameters": {
+      "anyOf": [
+        {
+          "additionalProperties": true,
+          "type": "object"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Scan Parameters"
+    },
+    "request_inputs": {
+      "anyOf": [
+        {
+          "additionalProperties": true,
+          "propertyNames": {
+            "enum": [
+              "arg_bundle",
+              "inputs",
+              "kwargs"
+            ]
+          },
+          "type": "object"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Request Inputs"
+    },
+    "info": {
+      "additionalProperties": true,
+      "title": "Info",
+      "type": "object"
+    },
+    "timestamp": {
+      "title": "Timestamp",
+      "type": "number"
+    }
+  },
+  "required": [
+    "scan_id",
+    "status",
+    "info"
+  ],
+  "title": "ScanStatusMessage",
+  "type": "object"
+}

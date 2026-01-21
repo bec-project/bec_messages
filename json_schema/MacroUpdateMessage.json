@@ -1,0 +1,49 @@
+{
+  "description": "Message for macro updates\n\nArgs:",
+  "properties": {
+    "metadata": {
+      "additionalProperties": true,
+      "title": "Metadata",
+      "type": "object"
+    },
+    "update_type": {
+      "enum": [
+        "add",
+        "remove",
+        "reload",
+        "reload_all"
+      ],
+      "title": "Update Type",
+      "type": "string"
+    },
+    "macro_name": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Macro Name"
+    },
+    "file_path": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "File Path"
+    }
+  },
+  "required": [
+    "update_type"
+  ],
+  "title": "MacroUpdateMessage",
+  "type": "object"
+}

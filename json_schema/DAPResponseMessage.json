@@ -1,0 +1,68 @@
+{
+  "$defs": {
+    "BECMessage": {
+      "description": "Base Model class for BEC Messages\n\nArgs:\n    msg_type (str): ClassVar for the message type, subclasses should override this.\n    metadata (dict, optional): Optional dictionary with metadata for the BECMessage",
+      "properties": {
+        "metadata": {
+          "additionalProperties": true,
+          "title": "Metadata",
+          "type": "object"
+        }
+      },
+      "title": "BECMessage",
+      "type": "object"
+    }
+  },
+  "description": "Message for DAP responses\n\nArgs:\n    success (bool): True if the request was successful\n    data (tuple, optional): DAP data (tuple of data (dict) and metadata). Defaults to ({} , None).\n    error (str, optional): DAP error. Defaults to None.\n    dap_request (BECMessage, None): DAP request. Defaults to None.\n    metadata (dict, optional): Metadata. Defaults to None.",
+  "properties": {
+    "metadata": {
+      "additionalProperties": true,
+      "title": "Metadata",
+      "type": "object"
+    },
+    "success": {
+      "title": "Success",
+      "type": "boolean"
+    },
+    "data": {
+      "anyOf": [
+        {
+          "items": {},
+          "type": "array"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "title": "Data"
+    },
+    "error": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Error"
+    },
+    "dap_request": {
+      "anyOf": [
+        {
+          "$ref": "#/$defs/BECMessage"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null
+    }
+  },
+  "required": [
+    "success"
+  ],
+  "title": "DAPResponseMessage",
+  "type": "object"
+}

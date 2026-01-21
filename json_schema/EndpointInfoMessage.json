@@ -1,0 +1,19 @@
+{
+  "description": "Message for endpoint information\n\nArgs:\n    endpoint (str): Endpoint URL\n    metadata (dict, optional): Additional metadata.",
+  "properties": {
+    "metadata": {
+      "additionalProperties": true,
+      "title": "Metadata",
+      "type": "object"
+    },
+    "endpoint": {
+      "title": "Endpoint",
+      "type": "string"
+    }
+  },
+  "required": [
+    "endpoint"
+  ],
+  "title": "EndpointInfoMessage",
+  "type": "object"
+}

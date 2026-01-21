@@ -1,0 +1,48 @@
+{
+  "$defs": {
+    "ProcedureWorkerStatus": {
+      "enum": [
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "title": "ProcedureWorkerStatus",
+      "type": "integer"
+    }
+  },
+  "description": "Message type for sending procedure worker status updates\n\nArgs:\n    worker_queue (str): Worker queue ID\n    status (str): Worker status\n    current_execution_id (str | None): ID of the current job, only allowed for RUNNING",
+  "properties": {
+    "metadata": {
+      "additionalProperties": true,
+      "title": "Metadata",
+      "type": "object"
+    },
+    "worker_queue": {
+      "title": "Worker Queue",
+      "type": "string"
+    },
+    "status": {
+      "$ref": "#/$defs/ProcedureWorkerStatus"
+    },
+    "current_execution_id": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Current Execution Id"
+    }
+  },
+  "required": [
+    "worker_queue",
+    "status"
+  ],
+  "title": "ProcedureWorkerStatusMessage",
+  "type": "object"
+}

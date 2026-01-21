@@ -1,0 +1,28 @@
+{
+  "description": "Message type for notifying watchers of changes to queues, mainly meant for GUI to consume",
+  "properties": {
+    "metadata": {
+      "additionalProperties": true,
+      "title": "Metadata",
+      "type": "object"
+    },
+    "queue_name": {
+      "title": "Queue Name",
+      "type": "string"
+    },
+    "queue_type": {
+      "enum": [
+        "execution",
+        "unhandled"
+      ],
+      "title": "Queue Type",
+      "type": "string"
+    }
+  },
+  "required": [
+    "queue_name",
+    "queue_type"
+  ],
+  "title": "ProcedureQNotifMessage",
+  "type": "object"
+}

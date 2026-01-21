@@ -1,0 +1,18 @@
+{
+  "description": "Message for raw data that was not encoded as a BECMessage.\nThe data dictionary is simply the raw data loaded using json.loads\n\nArgs:\n    data (Any): Raw data\n    metadata (dict, optional): Metadata. Defaults to None.",
+  "properties": {
+    "metadata": {
+      "additionalProperties": true,
+      "title": "Metadata",
+      "type": "object"
+    },
+    "data": {
+      "title": "Data"
+    }
+  },
+  "required": [
+    "data"
+  ],
+  "title": "RawMessage",
+  "type": "object"
+}

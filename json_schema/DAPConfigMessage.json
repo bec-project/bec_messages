@@ -1,0 +1,20 @@
+{
+  "description": "Message for DAP configuration\n\nArgs:\n    config (dict): DAP configuration dictionary\n    metadata (dict, optional): Metadata. Defaults to None.",
+  "properties": {
+    "metadata": {
+      "additionalProperties": true,
+      "title": "Metadata",
+      "type": "object"
+    },
+    "config": {
+      "additionalProperties": true,
+      "title": "Config",
+      "type": "object"
+    }
+  },
+  "required": [
+    "config"
+  ],
+  "title": "DAPConfigMessage",
+  "type": "object"
+}

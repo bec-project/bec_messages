@@ -1,0 +1,20 @@
+{
+  "description": "Message for service requests\n\nArgs:\n    action (Literal[\"restart\"]): Action to be executed by the service\n    metadata (dict, optional): Metadata. Defaults to None.",
+  "properties": {
+    "metadata": {
+      "additionalProperties": true,
+      "title": "Metadata",
+      "type": "object"
+    },
+    "action": {
+      "const": "restart",
+      "title": "Action",
+      "type": "string"
+    }
+  },
+  "required": [
+    "action"
+  ],
+  "title": "ServiceRequestMessage",
+  "type": "object"
+}

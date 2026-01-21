@@ -1,0 +1,35 @@
+{
+  "description": "Message type for sending back decisions on the acceptance of requests\n\nArgs:\n    accepted (bool): True if the request was accepted\n    message (str, dict, optional): String or dictionary describing the decision, e.g. \"Invalid request\"\n    metadata (dict, optional): Additional metadata, defaults to None.\n\nExamples:\n    >>> RequestResponseMessage(accepted=True, message=\"Request accepted\")",
+  "properties": {
+    "metadata": {
+      "additionalProperties": true,
+      "title": "Metadata",
+      "type": "object"
+    },
+    "accepted": {
+      "title": "Accepted",
+      "type": "boolean"
+    },
+    "message": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "additionalProperties": true,
+          "type": "object"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Message"
+    }
+  },
+  "required": [
+    "accepted"
+  ],
+  "title": "RequestResponseMessage",
+  "type": "object"
+}

@@ -1,0 +1,123 @@
+{
+  "$defs": {
+    "_StoredDataInfo": {
+      "description": "Internal class to store data info for each device in the scan history message\n\nArgs:\n    shape (tuple): Shape of the data for the device.\n    dtype (str, optional): Data type of the data for the device. Defaults to None.",
+      "properties": {
+        "shape": {
+          "items": {
+            "type": "integer"
+          },
+          "title": "Shape",
+          "type": "array"
+        },
+        "dtype": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Dtype"
+        }
+      },
+      "title": "_StoredDataInfo",
+      "type": "object"
+    }
+  },
+  "description": "Message type for sending scan history data from the file writer\n\nArgs:\n    scan_id (str): Scan ID.\n    scan_number (int): Scan number.\n    dataset_number (int): Dataset number.\n    file_path (str): Path to the file.\n    exit_status (Literal[\"closed\", \"aborted\", \"halted\"]): Exit status of the scan.\n    start_time (float): Start time of the scan.\n    end_time (float): End time of the scan.\n    scan_name (str): Name of the scan.\n    num_points (int): Number of points in the scan.\n    request_inputs (dict, optional): Inputs for the scan request, if available.\n    stored_data_info (dict[str, dict[str, _StoredDataInfo]], optional): Information about the stored data for each device in the scan.\n    metadata (dict, optional): Additional metadata.",
+  "properties": {
+    "metadata": {
+      "additionalProperties": true,
+      "title": "Metadata",
+      "type": "object"
+    },
+    "scan_id": {
+      "title": "Scan Id",
+      "type": "string"
+    },
+    "scan_number": {
+      "title": "Scan Number",
+      "type": "integer"
+    },
+    "dataset_number": {
+      "title": "Dataset Number",
+      "type": "integer"
+    },
+    "file_path": {
+      "title": "File Path",
+      "type": "string"
+    },
+    "exit_status": {
+      "enum": [
+        "closed",
+        "aborted",
+        "halted"
+      ],
+      "title": "Exit Status",
+      "type": "string"
+    },
+    "start_time": {
+      "title": "Start Time",
+      "type": "number"
+    },
+    "end_time": {
+      "title": "End Time",
+      "type": "number"
+    },
+    "scan_name": {
+      "title": "Scan Name",
+      "type": "string"
+    },
+    "num_points": {
+      "title": "Num Points",
+      "type": "integer"
+    },
+    "request_inputs": {
+      "anyOf": [
+        {
+          "additionalProperties": true,
+          "type": "object"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Request Inputs"
+    },
+    "stored_data_info": {
+      "anyOf": [
+        {
+          "additionalProperties": {
+            "additionalProperties": {
+              "$ref": "#/$defs/_StoredDataInfo"
+            },
+            "type": "object"
+          },
+          "type": "object"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Stored Data Info"
+    }
+  },
+  "required": [
+    "scan_id",
+    "scan_number",
+    "dataset_number",
+    "file_path",
+    "exit_status",
+    "start_time",
+    "end_time",
+    "scan_name",
+    "num_points"
+  ],
+  "title": "ScanHistoryMessage",
+  "type": "object"
+}

@@ -1,0 +1,59 @@
+{
+  "description": "Message type for sending procedure requests to the server\n\nSent by the API server / user to the procedure_request topic. It will be consumed by the procedure manager.\n    Args:\n        identifier (str): name of the procedure registered with the server\n        queue (str | none): a key for the procedure queue",
+  "properties": {
+    "metadata": {
+      "additionalProperties": true,
+      "title": "Metadata",
+      "type": "object"
+    },
+    "identifier": {
+      "title": "Identifier",
+      "type": "string"
+    },
+    "args_kwargs": {
+      "anyOf": [
+        {
+          "maxItems": 2,
+          "minItems": 2,
+          "prefixItems": [
+            {
+              "items": {},
+              "type": "array"
+            },
+            {
+              "additionalProperties": true,
+              "type": "object"
+            }
+          ],
+          "type": "array"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Args Kwargs"
+    },
+    "queue": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Queue"
+    },
+    "execution_id": {
+      "title": "Execution Id",
+      "type": "string"
+    }
+  },
+  "required": [
+    "identifier"
+  ],
+  "title": "ProcedureRequestMessage",
+  "type": "object"
+}

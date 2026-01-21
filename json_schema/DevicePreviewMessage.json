@@ -1,0 +1,34 @@
+{
+  "description": "Message type for sending device preview updates from the device server.\nThe message is sent from the device_server to monitor data streams, usually at\na reduced rate compared to the full data stream.\n\nArgs:\n    device (str): Device name.\n    signal (str): Signal name, e.g. \"image\", \"data\", \"preview\".\n    data (np.ndarray): Numpy array data from the preview.\n    timestamp (float, optional): Timestamp of the message. Defaults to time.time().\n    metadata (dict, optional): Additional metadata.",
+  "properties": {
+    "data": {
+      "contentEncoding": "base64",
+      "title": "Data",
+      "type": "string"
+    },
+    "metadata": {
+      "additionalProperties": true,
+      "title": "Metadata",
+      "type": "object"
+    },
+    "device": {
+      "title": "Device",
+      "type": "string"
+    },
+    "signal": {
+      "title": "Signal",
+      "type": "string"
+    },
+    "timestamp": {
+      "title": "Timestamp",
+      "type": "number"
+    }
+  },
+  "required": [
+    "data",
+    "device",
+    "signal"
+  ],
+  "title": "DevicePreviewMessage",
+  "type": "object"
+}

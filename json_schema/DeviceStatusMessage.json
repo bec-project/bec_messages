@@ -1,0 +1,24 @@
+{
+  "description": "Message type for sending device status updates from the device server\n\nArgs:\n    device (str): Device name.\n    status (int): Device status.\n    metadata (dict, optional): Additional metadata.",
+  "properties": {
+    "metadata": {
+      "additionalProperties": true,
+      "title": "Metadata",
+      "type": "object"
+    },
+    "device": {
+      "title": "Device",
+      "type": "string"
+    },
+    "status": {
+      "title": "Status",
+      "type": "integer"
+    }
+  },
+  "required": [
+    "device",
+    "status"
+  ],
+  "title": "DeviceStatusMessage",
+  "type": "object"
+}

@@ -1,0 +1,25 @@
+{
+  "description": "Message for service metrics\n\nArgs:\n    name (str): Name of the service.\n    metrics (dict): Dictionary with service metrics.\n    metadata (dict, optional): Additional metadata.",
+  "properties": {
+    "metadata": {
+      "additionalProperties": true,
+      "title": "Metadata",
+      "type": "object"
+    },
+    "name": {
+      "title": "Name",
+      "type": "string"
+    },
+    "metrics": {
+      "additionalProperties": true,
+      "title": "Metrics",
+      "type": "object"
+    }
+  },
+  "required": [
+    "name",
+    "metrics"
+  ],
+  "title": "ServiceMetricMessage",
+  "type": "object"
+}

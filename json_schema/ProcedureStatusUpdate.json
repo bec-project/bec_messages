@@ -1,0 +1,41 @@
+{
+  "description": "Message type for notifying watchers of changes to procedure executions, mainly meant for status helper to consume",
+  "properties": {
+    "metadata": {
+      "additionalProperties": true,
+      "title": "Metadata",
+      "type": "object"
+    },
+    "execution_id": {
+      "title": "Execution Id",
+      "type": "string"
+    },
+    "action": {
+      "enum": [
+        "Started",
+        "Aborted",
+        "Finished"
+      ],
+      "title": "Action",
+      "type": "string"
+    },
+    "error": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Error"
+    }
+  },
+  "required": [
+    "execution_id",
+    "action"
+  ],
+  "title": "ProcedureStatusUpdate",
+  "type": "object"
+}

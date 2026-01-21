@@ -1,0 +1,20 @@
+{
+  "description": "Message for GUI configuration\n\nArgs:\n    config (dict): GUI configuration, check widgets for more details\n    metadata (dict, optional): Metadata. Defaults to None.",
+  "properties": {
+    "metadata": {
+      "additionalProperties": true,
+      "title": "Metadata",
+      "type": "object"
+    },
+    "config": {
+      "additionalProperties": true,
+      "title": "Config",
+      "type": "object"
+    }
+  },
+  "required": [
+    "config"
+  ],
+  "title": "GUIConfigMessage",
+  "type": "object"
+}

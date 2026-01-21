@@ -1,0 +1,12 @@
+{
+  "description": "Base Model class for BEC Messages\n\nArgs:\n    msg_type (str): ClassVar for the message type, subclasses should override this.\n    metadata (dict, optional): Optional dictionary with metadata for the BECMessage",
+  "properties": {
+    "metadata": {
+      "additionalProperties": true,
+      "title": "Metadata",
+      "type": "object"
+    }
+  },
+  "title": "BECMessage",
+  "type": "object"
+}

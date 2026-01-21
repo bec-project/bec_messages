@@ -9,10 +9,23 @@ from typing import Annotated, Any, ClassVar, Literal, Self
 from uuid import uuid4
 
 import numpy as np
-from pydantic import BaseModel, ConfigDict, Field, field_validator, model_validator
-from pydantic import WithJsonSchema
+from pydantic import (
+    BaseModel,
+    ConfigDict,
+    Field,
+    PlainSerializer,
+    WithJsonSchema,
+    field_validator,
+    model_validator,
+)
 
-NumpyField = Annotated[np.ndarray, WithJsonSchema({"type": "bytes"})]
+from bec_messages.numpy_encoder import ndarray_to_bytes_json
+
+NumpyField = Annotated[
+    np.ndarray,
+    PlainSerializer(ndarray_to_bytes_json),
+    WithJsonSchema({"type": "string", "contentEncoding": "base64"}),
+]
 
 
 class ProcedureWorkerStatus(Enum):
@@ -642,7 +655,14 @@ class DeviceInfoMessage(BECMessage):
     info: dict
 
 
-class DeviceMonitor2DMessage(BECMessage):
+class _DeviceDataMixin(BaseModel):
+    model_config = ConfigDict(
+        ser_json_bytes="base64", val_json_bytes="base64", arbitrary_types_allowed=True
+    )
+    data: NumpyField
+
+
+class DeviceMonitor2DMessage(BECMessage, _DeviceDataMixin):
     """Message type for sending device monitor updates from the device server.
 
     The message is send from the device_server to monitor data coming from larger detector.
@@ -656,14 +676,7 @@ class DeviceMonitor2DMessage(BECMessage):
 
     msg_type: ClassVar[str] = "device_monitor2d_message"
     device: str
-    data: NumpyField
-
     timestamp: float = Field(default_factory=time.time)
-
-    metadata: dict = Field(default_factory=dict)
-
-    # Needed for pydantic to accept numpy arrays
-    model_config = ConfigDict(arbitrary_types_allowed=True)
 
     @field_validator("data")
     @classmethod
@@ -684,7 +697,7 @@ class DeviceMonitor2DMessage(BECMessage):
         )
 
 
-class DeviceMonitor1DMessage(BECMessage):
+class DeviceMonitor1DMessage(BECMessage, _DeviceDataMixin):
     """Message type for sending device monitor updates from the device server.
 
     The message is send from the device_server to monitor data coming from larger detector.
@@ -698,13 +711,7 @@ class DeviceMonitor1DMessage(BECMessage):
 
     msg_type: ClassVar[str] = "device_monitor1d_message"
     device: str
-    data: NumpyField
     timestamp: float = Field(default_factory=time.time)
-
-    metadata: dict = Field(default_factory=dict)
-
-    # Needed for pydantic to accept numpy arrays
-    model_config = ConfigDict(arbitrary_types_allowed=True)
 
     @field_validator("data")
     @classmethod
@@ -721,7 +728,7 @@ class DeviceMonitor1DMessage(BECMessage):
         raise ValueError(f"Invalid dimenson {v.ndim} for numpy array. Must be a 1D array.")
 
 
-class DevicePreviewMessage(BECMessage):
+class DevicePreviewMessage(BECMessage, _DeviceDataMixin):
     """
     Message type for sending device preview updates from the device server.
     The message is sent from the device_server to monitor data streams, usually at
@@ -738,10 +745,7 @@ class DevicePreviewMessage(BECMessage):
     msg_type: ClassVar[str] = "device_preview_message"
     device: str
     signal: str
-    data: NumpyField
     timestamp: float = Field(default_factory=time.time)
-    # Needed for pydantic to accept numpy arrays
-    model_config = ConfigDict(arbitrary_types_allowed=True)
 
 
 class DeviceUserROIMessage(BECMessage):

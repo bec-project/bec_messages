@@ -1,0 +1,25 @@
+{
+  "description": "Message type for sending scan baseline data from the scan bundler\n\nArgs:\n    scan_id (str): Scan ID.\n    data (dict): Scan baseline data.\n    metadata (dict, optional): Additional metadata.",
+  "properties": {
+    "metadata": {
+      "additionalProperties": true,
+      "title": "Metadata",
+      "type": "object"
+    },
+    "scan_id": {
+      "title": "Scan Id",
+      "type": "string"
+    },
+    "data": {
+      "additionalProperties": true,
+      "title": "Data",
+      "type": "object"
+    }
+  },
+  "required": [
+    "scan_id",
+    "data"
+  ],
+  "title": "ScanBaselineMessage",
+  "type": "object"
+}

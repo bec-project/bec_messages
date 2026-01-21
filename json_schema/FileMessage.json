@@ -1,0 +1,72 @@
+{
+  "description": "File message to inform about the status of a file writing operation\n\nArgs:\n    file_path (str): Path to the file.\n    done (bool): True if the file writing operation is done.\n    successful (bool): True if the file writing operation was successful.\n    device_name (str): Name of the device. If is_master_file is True, device_name is optional.\n    is_master_file (bool, optional): True if the file is a master file. Defaults to False.\n    file_type (str, optional): Type of the file. Defaults to \"h5\".\n    hinted_h5_entries (dict[str, str], optional): Dictionary with hinted h5 entries. Defaults to None.\n                This allows the file writer to automatically create external links within the master.h5 file\n                written by BEC under the entry for the specified device. The dictionary should contain the\n                sub-entries and to where these should link in the external h5 file (file_path).\n                Example for device_name='eiger', and dict('data' : '/entry/data/data'), the location\n                '/entry/collection/devices/eiger/data' within the master file will link to '/entry/data/data'\n                of the external file.\n    metadata (dict, optional): Additional metadata. Defaults to None.",
+  "properties": {
+    "metadata": {
+      "additionalProperties": true,
+      "title": "Metadata",
+      "type": "object"
+    },
+    "file_path": {
+      "title": "File Path",
+      "type": "string"
+    },
+    "done": {
+      "title": "Done",
+      "type": "boolean"
+    },
+    "successful": {
+      "title": "Successful",
+      "type": "boolean"
+    },
+    "is_master_file": {
+      "default": false,
+      "title": "Is Master File",
+      "type": "boolean"
+    },
+    "device_name": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Device Name"
+    },
+    "file_type": {
+      "default": "h5",
+      "title": "File Type",
+      "type": "string"
+    },
+    "hinted_h5_entries": {
+      "anyOf": [
+        {
+          "additionalProperties": {
+            "type": "string"
+          },
+          "type": "object"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Hinted H5 Entries"
+    }
+  },
+  "required": [
+    "file_path",
+    "done",
+    "successful"
+  ],
+  "title": "FileMessage",
+  "type": "object"
+}

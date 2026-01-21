@@ -1,0 +1,23 @@
+{
+  "description": "Message for observer updates\n\nArgs:\n    observer (list[dict]): List of observer descriptions (dictionaries).\n    metadata (dict, optional): Additional metadata.",
+  "properties": {
+    "metadata": {
+      "additionalProperties": true,
+      "title": "Metadata",
+      "type": "object"
+    },
+    "observer": {
+      "items": {
+        "additionalProperties": true,
+        "type": "object"
+      },
+      "title": "Observer",
+      "type": "array"
+    }
+  },
+  "required": [
+    "observer"
+  ],
+  "title": "ObserverMessage",
+  "type": "object"
+}

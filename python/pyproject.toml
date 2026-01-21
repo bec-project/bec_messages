@@ -17,7 +17,7 @@ license = "BSD-3-Clause"
 
 
 [project.optional-dependencies]
-dev = ["black~=25.0", "isort~=5.13, >=5.13.2", "typer~=0.15"]
+dev = ["black~=25.0", "isort~=5.13, >=5.13.2", "jsonschema~=4.26"]
 
 [project.scripts]
 bec-plugin-manager = "bec_messages._build_schema:main"

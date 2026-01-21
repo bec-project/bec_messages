@@ -1,0 +1,34 @@
+{
+  "description": "Message for DAP requests\n\nArgs:\n    dap_cls (str): DAP class name\n    dap_type (Literal[\"continuous\", \"on_demand\"]) : Different types of DAP modes\n    config (dict): DAP configuration\n    metadata (dict, optional): Metadata. Defaults to None.",
+  "properties": {
+    "metadata": {
+      "additionalProperties": true,
+      "title": "Metadata",
+      "type": "object"
+    },
+    "dap_cls": {
+      "title": "Dap Cls",
+      "type": "string"
+    },
+    "dap_type": {
+      "enum": [
+        "continuous",
+        "on_demand"
+      ],
+      "title": "Dap Type",
+      "type": "string"
+    },
+    "config": {
+      "additionalProperties": true,
+      "title": "Config",
+      "type": "object"
+    }
+  },
+  "required": [
+    "dap_cls",
+    "dap_type",
+    "config"
+  ],
+  "title": "DAPRequestMessage",
+  "type": "object"
+}

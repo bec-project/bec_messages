@@ -1,0 +1,29 @@
+{
+  "description": "Message for communicating the progress of a long running task\n\nArgs:\n    value (float): Current progress value\n    max_value (float): Maximum progress value\n    done (bool): True if the task is done\n    metadata (dict, optional): Metadata. Defaults to None.",
+  "properties": {
+    "metadata": {
+      "additionalProperties": true,
+      "title": "Metadata",
+      "type": "object"
+    },
+    "value": {
+      "title": "Value",
+      "type": "number"
+    },
+    "max_value": {
+      "title": "Max Value",
+      "type": "number"
+    },
+    "done": {
+      "title": "Done",
+      "type": "boolean"
+    }
+  },
+  "required": [
+    "value",
+    "max_value",
+    "done"
+  ],
+  "title": "ProgressMessage",
+  "type": "object"
+}

@@ -1,0 +1,20 @@
+{
+  "description": "Message for service responses\n\nArgs:\n    response (dict): Service response\n    metadata (dict, optional): Metadata. Defaults to None.",
+  "properties": {
+    "metadata": {
+      "additionalProperties": true,
+      "title": "Metadata",
+      "type": "object"
+    },
+    "response": {
+      "additionalProperties": true,
+      "title": "Response",
+      "type": "object"
+    }
+  },
+  "required": [
+    "response"
+  ],
+  "title": "ServiceResponseMessage",
+  "type": "object"
+}

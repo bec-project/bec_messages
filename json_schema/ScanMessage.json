@@ -1,0 +1,30 @@
+{
+  "description": "Message type for sending scan segment data from the scan bundler\n\nArgs:\n    point_id (int): Point ID from the scan segment.\n    scan_id (str): Scan ID.\n    data (dict): Scan segment data.\n    metadata (dict, optional): Additional metadata.",
+  "properties": {
+    "metadata": {
+      "additionalProperties": true,
+      "title": "Metadata",
+      "type": "object"
+    },
+    "point_id": {
+      "title": "Point Id",
+      "type": "integer"
+    },
+    "scan_id": {
+      "title": "Scan Id",
+      "type": "string"
+    },
+    "data": {
+      "additionalProperties": true,
+      "title": "Data",
+      "type": "object"
+    }
+  },
+  "required": [
+    "point_id",
+    "scan_id",
+    "data"
+  ],
+  "title": "ScanMessage",
+  "type": "object"
+}

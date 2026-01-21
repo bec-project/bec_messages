@@ -1,0 +1,29 @@
+{
+  "description": "Message type for sending device monitor updates from the device server.\n\nThe message is send from the device_server to monitor data coming from larger detector.\n\nArgs:\n    device (str): Device name.\n    data (np.ndarray): Numpy array data from the monitor\n    metadata (dict, optional): Additional metadata.",
+  "properties": {
+    "data": {
+      "contentEncoding": "base64",
+      "title": "Data",
+      "type": "string"
+    },
+    "metadata": {
+      "additionalProperties": true,
+      "title": "Metadata",
+      "type": "object"
+    },
+    "device": {
+      "title": "Device",
+      "type": "string"
+    },
+    "timestamp": {
+      "title": "Timestamp",
+      "type": "number"
+    }
+  },
+  "required": [
+    "data",
+    "device"
+  ],
+  "title": "DeviceMonitor1DMessage",
+  "type": "object"
+}

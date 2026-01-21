@@ -1,0 +1,19 @@
+{
+  "description": "Message for Auto Update configuration\n\nArgs:\n    selected_device (str): the selected device for plotting\n    metadata (dict, optional): Metadata. Defaults to None.",
+  "properties": {
+    "metadata": {
+      "additionalProperties": true,
+      "title": "Metadata",
+      "type": "object"
+    },
+    "selected_device": {
+      "title": "Selected Device",
+      "type": "string"
+    }
+  },
+  "required": [
+    "selected_device"
+  ],
+  "title": "GUIAutoUpdateConfigMessage",
+  "type": "object"
+}

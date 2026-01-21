@@ -1,0 +1,64 @@
+{
+  "description": "Message type for sending scan queue modifications\n\nArgs:\n    scan_id (str): Unique scan ID\n    action (str): One of the actions defined in ACTIONS: (\"pause\", \"deferred_pause\", \"continue\", \"abort\", \"clear\", \"restart\", \"halt\", \"resume\")\n    parameter (dict): Additional parameters for the action\n    queue (str): Defaults to \"primary\" queue. The name of the queue that receives the modification.\n    metadata (dict, optional): Additional metadata to describe and identify the scan.\n\nExamples:\n    >>> ScanQueueModificationMessage(scan_id=scan_id, action=\"abort\", parameter={})",
+  "properties": {
+    "metadata": {
+      "additionalProperties": true,
+      "title": "Metadata",
+      "type": "object"
+    },
+    "scan_id": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        {
+          "items": {
+            "type": "null"
+          },
+          "type": "array"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "title": "Scan Id"
+    },
+    "action": {
+      "enum": [
+        "pause",
+        "deferred_pause",
+        "continue",
+        "abort",
+        "clear",
+        "restart",
+        "halt",
+        "resume"
+      ],
+      "title": "Action",
+      "type": "string"
+    },
+    "parameter": {
+      "additionalProperties": true,
+      "title": "Parameter",
+      "type": "object"
+    },
+    "queue": {
+      "default": "primary",
+      "title": "Queue",
+      "type": "string"
+    }
+  },
+  "required": [
+    "scan_id",
+    "action",
+    "parameter"
+  ],
+  "title": "ScanQueueModificationMessage",
+  "type": "object"
+}

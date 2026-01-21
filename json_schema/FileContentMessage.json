@@ -1,0 +1,31 @@
+{
+  "description": "File content message to inform about the content of a file\n\nArgs:\n    file_path (str): Path to the file.\n    data (str): Content of the file.\n    scan_info (dict): Scan information.\n    metadata (dict, optional): Status metadata. Defaults to None.",
+  "properties": {
+    "metadata": {
+      "additionalProperties": true,
+      "title": "Metadata",
+      "type": "object"
+    },
+    "file_path": {
+      "title": "File Path",
+      "type": "string"
+    },
+    "data": {
+      "additionalProperties": true,
+      "title": "Data",
+      "type": "object"
+    },
+    "scan_info": {
+      "additionalProperties": true,
+      "title": "Scan Info",
+      "type": "object"
+    }
+  },
+  "required": [
+    "file_path",
+    "data",
+    "scan_info"
+  ],
+  "title": "FileContentMessage",
+  "type": "object"
+}

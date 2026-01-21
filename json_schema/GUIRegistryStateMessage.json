@@ -1,0 +1,50 @@
+{
+  "description": "Message for GUI registry state. The dictionary contains the state of the GUI registry.\n\nArgs:\n    state (dict[str, dict[Literal[\"gui_id\", \"name\", \"widget_class\", \"config\", \"__rpc__\", \"container_proxy\"], str | bool | dict | None]): GUI registry state\n    metadata (dict, optional): Metadata. Defaults to None.",
+  "properties": {
+    "metadata": {
+      "additionalProperties": true,
+      "title": "Metadata",
+      "type": "object"
+    },
+    "state": {
+      "additionalProperties": {
+        "additionalProperties": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "boolean"
+            },
+            {
+              "additionalProperties": true,
+              "type": "object"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "propertyNames": {
+          "enum": [
+            "gui_id",
+            "name",
+            "object_name",
+            "widget_class",
+            "config",
+            "__rpc__",
+            "container_proxy"
+          ]
+        },
+        "type": "object"
+      },
+      "title": "State",
+      "type": "object"
+    }
+  },
+  "required": [
+    "state"
+  ],
+  "title": "GUIRegistryStateMessage",
+  "type": "object"
+}

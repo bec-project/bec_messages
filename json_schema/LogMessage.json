@@ -1,0 +1,42 @@
+{
+  "description": "Log message\n\nArgs:\n    log_type (Literal[\"trace\", \"debug\", \"info\", \"success\", \"warning\", \"error\", \"critical\", \"console_log\"]) : Log type.\n    log_msg (dict or str): Log message.\n    metadata (dict, optional): Additional metadata.",
+  "properties": {
+    "metadata": {
+      "additionalProperties": true,
+      "title": "Metadata",
+      "type": "object"
+    },
+    "log_type": {
+      "enum": [
+        "trace",
+        "debug",
+        "info",
+        "success",
+        "warning",
+        "error",
+        "critical",
+        "console_log"
+      ],
+      "title": "Log Type",
+      "type": "string"
+    },
+    "log_msg": {
+      "anyOf": [
+        {
+          "additionalProperties": true,
+          "type": "object"
+        },
+        {
+          "type": "string"
+        }
+      ],
+      "title": "Log Msg"
+    }
+  },
+  "required": [
+    "log_type",
+    "log_msg"
+  ],
+  "title": "LogMessage",
+  "type": "object"
+}

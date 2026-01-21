@@ -1,0 +1,44 @@
+{
+  "description": "Message for ACL accounts\n\nArgs:\n    accounts (dict): ACL accounts",
+  "properties": {
+    "metadata": {
+      "additionalProperties": true,
+      "title": "Metadata",
+      "type": "object"
+    },
+    "accounts": {
+      "additionalProperties": {
+        "additionalProperties": {
+          "anyOf": [
+            {
+              "items": {
+                "type": "string"
+              },
+              "type": "array"
+            },
+            {
+              "type": "string"
+            }
+          ]
+        },
+        "propertyNames": {
+          "enum": [
+            "categories",
+            "keys",
+            "channels",
+            "commands",
+            "profile"
+          ]
+        },
+        "type": "object"
+      },
+      "title": "Accounts",
+      "type": "object"
+    }
+  },
+  "required": [
+    "accounts"
+  ],
+  "title": "ACLAccountsMessage",
+  "type": "object"
+}

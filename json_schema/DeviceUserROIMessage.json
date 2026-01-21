@@ -1,0 +1,41 @@
+{
+  "description": "Message type for sending device user ROI updates to and from the device server.\n\nArgs:\n    device (str): Device name.\n    signal (str): Signal name associated with the ROI.\n    roi_type (str): Type of the ROI, e.g., 'rectangle', 'circle', 'polygon'.\n    roi (dict): Dictionary containing the ROI information, e.g., {\"x\": 100, \"y\": 200, \"width\": 50, \"height\": 50}.\n    metadata (dict, optional): Additional metadata.",
+  "properties": {
+    "metadata": {
+      "additionalProperties": true,
+      "title": "Metadata",
+      "type": "object"
+    },
+    "device": {
+      "title": "Device",
+      "type": "string"
+    },
+    "signal": {
+      "title": "Signal",
+      "type": "string"
+    },
+    "roi_type": {
+      "description": "Type of the ROI, e.g. 'rectangle', 'circle', 'polygon'",
+      "title": "Roi Type",
+      "type": "string"
+    },
+    "roi": {
+      "additionalProperties": true,
+      "description": "Dictionary containing the ROI information, e.g. {'x': 100, 'y': 200, 'width': 50, 'height': 50}",
+      "title": "Roi",
+      "type": "object"
+    },
+    "timestamp": {
+      "title": "Timestamp",
+      "type": "number"
+    }
+  },
+  "required": [
+    "device",
+    "signal",
+    "roi_type",
+    "roi"
+  ],
+  "title": "DeviceUserROIMessage",
+  "type": "object"
+}

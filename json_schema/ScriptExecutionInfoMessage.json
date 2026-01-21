@@ -1,0 +1,57 @@
+{
+  "description": "Message for script execution\n\nArgs:\n    script_id (str): Unique identifier for the script\n    status (Literal[\"running\", \"completed\", \"failed\", \"aborted\"]): Execution status\n    current_lines (list[int], optional): Current line numbers being executed. Defaults to None.\n    traceback (str, optional): Traceback information. Defaults to None.",
+  "properties": {
+    "metadata": {
+      "additionalProperties": true,
+      "title": "Metadata",
+      "type": "object"
+    },
+    "script_id": {
+      "title": "Script Id",
+      "type": "string"
+    },
+    "status": {
+      "enum": [
+        "running",
+        "completed",
+        "failed",
+        "aborted"
+      ],
+      "title": "Status",
+      "type": "string"
+    },
+    "current_lines": {
+      "anyOf": [
+        {
+          "items": {
+            "type": "integer"
+          },
+          "type": "array"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Current Lines"
+    },
+    "traceback": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Traceback"
+    }
+  },
+  "required": [
+    "script_id",
+    "status"
+  ],
+  "title": "ScriptExecutionInfoMessage",
+  "type": "object"
+}

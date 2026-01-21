@@ -1,0 +1,18 @@
+{
+  "description": "Message to inform about a global variable\n\nArgs:\n    value (Any): Variable value, can be of any type.\n    metadata (dict, optional): Additional metadata.",
+  "properties": {
+    "metadata": {
+      "additionalProperties": true,
+      "title": "Metadata",
+      "type": "object"
+    },
+    "value": {
+      "title": "Value"
+    }
+  },
+  "required": [
+    "value"
+  ],
+  "title": "VariableMessage",
+  "type": "object"
+}

@@ -1,0 +1,41 @@
+{
+  "description": "Message type for sending device RPC return values from the device server\n\nArgs:\n    device (str): Device name.\n    return_val (Any): Return value of the RPC call.\n    out (str or dict): Output of the RPC call.\n    success (bool, optional): True if the RPC call was successful. Defaults to True.\n    metadata (dict, optional): Additional metadata.",
+  "properties": {
+    "metadata": {
+      "additionalProperties": true,
+      "title": "Metadata",
+      "type": "object"
+    },
+    "device": {
+      "title": "Device",
+      "type": "string"
+    },
+    "return_val": {
+      "title": "Return Val"
+    },
+    "out": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "additionalProperties": true,
+          "type": "object"
+        }
+      ],
+      "title": "Out"
+    },
+    "success": {
+      "default": true,
+      "title": "Success",
+      "type": "boolean"
+    }
+  },
+  "required": [
+    "device",
+    "return_val",
+    "out"
+  ],
+  "title": "DeviceRPCMessage",
+  "type": "object"
+}

@@ -1,0 +1,20 @@
+{
+  "description": "Message for GUI data, i.e. update for DAP processes or scans\n\nArgs:\n    data (dict): GUI data\n    metadata (dict, optional): Metadata. Defaults to None.",
+  "properties": {
+    "metadata": {
+      "additionalProperties": true,
+      "title": "Metadata",
+      "type": "object"
+    },
+    "data": {
+      "additionalProperties": true,
+      "title": "Data",
+      "type": "object"
+    }
+  },
+  "required": [
+    "data"
+  ],
+  "title": "GUIDataMessage",
+  "type": "object"
+}

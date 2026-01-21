@@ -1,0 +1,46 @@
+{
+  "description": "Message type for sending device config updates\n\nArgs:\n    action (Literal['add', 'set', 'update', 'reload', 'reset', 'remove', 'cancel']) : Update of the device config.\n    config (dict, or None): Device config (add, set, update) or None (reload, reset).\n    metadata (dict, optional): Additional metadata.",
+  "properties": {
+    "metadata": {
+      "additionalProperties": true,
+      "title": "Metadata",
+      "type": "object"
+    },
+    "action": {
+      "anyOf": [
+        {
+          "enum": [
+            "add",
+            "set",
+            "update",
+            "reload",
+            "remove",
+            "reset",
+            "cancel"
+          ],
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Action"
+    },
+    "config": {
+      "anyOf": [
+        {
+          "additionalProperties": true,
+          "type": "object"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Config"
+    }
+  },
+  "title": "DeviceConfigMessage",
+  "type": "object"
+}

@@ -1,0 +1,73 @@
+{
+  "description": "Message type for sending information to the client\nArgs:\n    message (str): message to the client\n    show_asap (bool, optional): True if the message should be shown immediately. Defaults to True\n    # Note: The option show_asap = True/False is temporary disabled until a decision is made on how to handle it. TODO #286\n    RID (str, optional): Request ID forwarded from the service, if available will be used to filter on the client site. Defaults to None.\n    source (str, Literal[\n        \"bec_ipython_client\",\n        \"scan_server\",\n        \"device_server\",\n        \"scan_bundler\",\n        \"file_writer\",\n        \"scihub\",\n        \"dap\",\n        None]\n        : Source of the message. Defaults to None.\n    scope (str, optional): Scope of the message; Defaults to None. One can follow\n                           a pattern to filter afterwards for specific client info; e.g. \"scan\", \"rotation\"\n    severity (int, optional): severity level of the message (0: INFO, 1: WARNING, 2: ERROR); Defaults to 0\n    expire (float, optional): Time in seconds after which the message expires and should not be shown anymore.\n                              Defaults to 60 seconds. Set it to 0 to never expire the message.",
+  "properties": {
+    "metadata": {
+      "additionalProperties": true,
+      "title": "Metadata",
+      "type": "object"
+    },
+    "message": {
+      "title": "Message",
+      "type": "string"
+    },
+    "show_asap": {
+      "default": true,
+      "title": "Show Asap",
+      "type": "boolean"
+    },
+    "RID": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Rid"
+    },
+    "source": {
+      "default": null,
+      "enum": [
+        "bec_ipython_client",
+        "scan_server",
+        "device_server",
+        "scan_bundler",
+        "file_writer",
+        "scihub",
+        "dap",
+        null
+      ],
+      "title": "Source"
+    },
+    "scope": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Scope"
+    },
+    "severity": {
+      "default": 0,
+      "title": "Severity",
+      "type": "integer"
+    },
+    "expire": {
+      "default": 60.0,
+      "description": "Time in seconds after which the message expires and should not be shown anymore. Defaults to 60 seconds. Set it to 0 to never expire the message.",
+      "title": "Expire",
+      "type": "number"
+    }
+  },
+  "required": [
+    "message"
+  ],
+  "title": "ClientInfoMessage",
+  "type": "object"
+}

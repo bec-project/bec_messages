@@ -1,0 +1,29 @@
+{
+  "description": "Message type for sending device readings from the device server\n\nArgs:\n    signals (dict): Dictionary containing the device signals and their values\n    metadata (dict, optional): Metadata to describe the conditions of the device reading\n\nExamples:\n    >>> BECMessage.DeviceMessage(signals={'samx': {'value': 14.999033949016491, 'timestamp': 1686385306.0265112}, 'samx_setpoint': {'value': 15.0, 'timestamp': 1686385306.016806}, 'samx_motor_is_moving': {'value': 0, 'timestamp': 1686385306.026888}}}, metadata={'stream': 'primary', 'DIID': 353, 'RID': 'd3471acc-309d-43b7-8ff8-f986c3fdecf1', 'point_id': 49, 'scan_id': '8e234698-358e-402d-a272-73e168a72f66', 'queue_id': '7a232746-6c90-44f5-81f5-74ab0ea22d4a'})",
+  "properties": {
+    "metadata": {
+      "additionalProperties": true,
+      "title": "Metadata",
+      "type": "object"
+    },
+    "signals": {
+      "additionalProperties": {
+        "additionalProperties": true,
+        "propertyNames": {
+          "enum": [
+            "value",
+            "timestamp"
+          ]
+        },
+        "type": "object"
+      },
+      "title": "Signals",
+      "type": "object"
+    }
+  },
+  "required": [
+    "signals"
+  ],
+  "title": "DeviceMessage",
+  "type": "object"
+}

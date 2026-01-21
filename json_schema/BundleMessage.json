@@ -1,0 +1,17 @@
+{
+  "description": "Message type to send a bundle of BECMessages.\n\nUsed to bundle together various messages, i.e. used to emit data in the scan bundler.\n\nArgs:\n    messages (list): List of BECMessage objects that are bundled together\n    metadata (dict, optional): Additional metadata to describe the scan\n\nExamples:\n    >>> BundleMessage(messages=[ScanQueueMessage(...), ScanStatusMessage(...)], metadata = {...})",
+  "properties": {
+    "metadata": {
+      "additionalProperties": true,
+      "title": "Metadata",
+      "type": "object"
+    },
+    "messages": {
+      "items": {},
+      "title": "Messages",
+      "type": "array"
+    }
+  },
+  "title": "BundleMessage",
+  "type": "object"
+}

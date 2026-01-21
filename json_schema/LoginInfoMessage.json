@@ -1,0 +1,37 @@
+{
+  "description": "Message for public login information\n\nArgs:\n    host (str): Hostname\n    deployment (str): Deployment id",
+  "properties": {
+    "metadata": {
+      "additionalProperties": true,
+      "title": "Metadata",
+      "type": "object"
+    },
+    "host": {
+      "title": "Host",
+      "type": "string"
+    },
+    "deployment": {
+      "title": "Deployment",
+      "type": "string"
+    },
+    "available_accounts": {
+      "items": {
+        "type": "string"
+      },
+      "title": "Available Accounts",
+      "type": "array"
+    },
+    "atlas_login": {
+      "title": "Atlas Login",
+      "type": "boolean"
+    }
+  },
+  "required": [
+    "host",
+    "deployment",
+    "available_accounts",
+    "atlas_login"
+  ],
+  "title": "LoginInfoMessage",
+  "type": "object"
+}
