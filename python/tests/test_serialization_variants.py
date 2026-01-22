@@ -12,7 +12,6 @@ from pydantic import BaseModel
 from pydantic.fields import FieldInfo
 from pydantic_core import PydanticUndefined
 
-import bec_messages
 from bec_messages import messages
 from bec_messages.messages import (
     BECMessage,
@@ -28,19 +27,6 @@ from bec_messages.messages import (
     ScanQueueStatus,
     ScanQueueStatusMessage,
 )
-from bec_messages.serialization import MsgpackSerialization
-
-
-def _get_model_classes():
-    return (
-        cls
-        for cls in messages.__dict__.values()
-        if issubclass(cls, BaseModel)
-        and cls is not BaseModel
-        and cls is not BECMessage
-        and not cls.__name__.startswith("_")
-    )
-
 
 _T = TypeVar("_T")
 default_vals = {
@@ -116,20 +102,52 @@ def _instantiate_with_defaults(c: type[_M]) -> _M:
     return c.model_validate(data)
 
 
+def _get_model_classes():
+    return (
+        cls
+        for cls in messages.__dict__.values()
+        if issubclass(cls, BaseModel)
+        and cls is not BaseModel
+        and cls is not BECMessage
+        and not cls.__name__.startswith("_")
+    )
+
+
 CLSS_TO_TEST = list(_get_model_classes())
+
+
+@pytest.mark.parametrize("msg_cls", CLSS_TO_TEST)
+def test_pydantic_python_roundtrip(msg_cls):
+    instance = _instantiate_with_defaults(msg_cls)
+    ser = instance.model_dump()
+    deser = msg_cls.model_validate(ser)
+    assert deser == instance
+
+
+@pytest.mark.parametrize("msg_cls", CLSS_TO_TEST)
+def test_pydantic_json_roundtrip(msg_cls):
+    instance = _instantiate_with_defaults(msg_cls)
+    ser = instance.model_dump_json()
+    deser = msg_cls.model_validate_json(ser)
+    assert deser == instance
+
+
+def object_hook(data):
+    if "__bec_codec__" in data:
+        if (type_name := data["__bec_codec__"].get("type_name")) is None:
+            raise TypeError(f"Malformed __bec_codec__ block in {data}")
+        if (msg_cls := messages.__dict__.get(type_name)) is None:
+            raise TypeError(f"BEC serializable type {type_name} unknown")
+        return msg_cls.model_validate(data)
+    return data
 
 
 @pytest.mark.parametrize("msg_cls", CLSS_TO_TEST)
 def test_msgpack_roundtrip(msg_cls):
     instance = _instantiate_with_defaults(msg_cls)
-    ser = MsgpackSerialization.dumps(instance)
-    deser = MsgpackSerialization.loads(ser)
-    if isinstance(deser, dict):
-        deser = msg_cls.model_validate(deser)
-    if msg_cls is BundleMessage:
-        assert deser == instance.messages
-    else:
-        assert deser == instance
+    ser = msgpack.packb(instance.model_dump(mode="json"))
+    deser = msgpack.unpackb(ser, object_hook=object_hook)
+    assert instance == deser
 
 
 def _schema_for_cls(cls: BaseModel):
@@ -149,8 +167,7 @@ def test_pydantic_against_schema(msg_cls):
 @pytest.mark.parametrize("msg_cls", CLSS_TO_TEST)
 def test_msgpack_against_schema(msg_cls):
     instance = _instantiate_with_defaults(msg_cls)
-    ser = MsgpackSerialization.dumps(instance)
+    ser = msgpack.packb(instance.model_dump(mode="json"))
     deser = msgpack.unpackb(ser)
-
     schema = _schema_for_cls(msg_cls)
-    jsonschema.validate(dump, schema)
+    jsonschema.validate(deser, schema)

@@ -5,27 +5,13 @@ import time
 import uuid
 from copy import deepcopy
 from enum import Enum, auto
-from typing import Annotated, Any, ClassVar, Literal, Self
+from typing import Any, ClassVar, Literal, Self
 from uuid import uuid4
 
 import numpy as np
-from pydantic import (
-    BaseModel,
-    ConfigDict,
-    Field,
-    PlainSerializer,
-    WithJsonSchema,
-    field_validator,
-    model_validator,
-)
+from pydantic import BaseModel, ConfigDict, Field, field_validator, model_validator
 
-from bec_messages.numpy_encoder import ndarray_to_bytes_json
-
-NumpyField = Annotated[
-    np.ndarray,
-    PlainSerializer(ndarray_to_bytes_json),
-    WithJsonSchema({"type": "string", "contentEncoding": "base64"}),
-]
+from bec_messages.bec_serializable import BECSerializable, NumpyField
 
 
 class ProcedureWorkerStatus(Enum):
@@ -45,7 +31,7 @@ class BECStatus(Enum):
     ERROR = -1
 
 
-class BECMessage(BaseModel):
+class BECMessage(BECSerializable):
     """Base Model class for BEC Messages
 
     Args:
@@ -54,7 +40,7 @@ class BECMessage(BaseModel):
 
     """
 
-    msg_type: ClassVar[str]
+    msg_type: ClassVar[str] = "bec_message"
     metadata: dict = Field(default_factory=dict)
 
     @property
@@ -254,7 +240,7 @@ class ScanQueueOrderMessage(BECMessage):
     target_position: int | None = None
 
 
-class RequestBlock(BaseModel):
+class RequestBlock(BECSerializable):
     """
     Model for a request block within a scan queue entry. It represents a single request in the scan queue, e.g. a single scan or rpc call.
 
@@ -282,7 +268,7 @@ class RequestBlock(BaseModel):
     report_instructions: list[dict] | None = None
 
 
-class QueueInfoEntry(BaseModel):
+class QueueInfoEntry(BECSerializable):
     """
     Model for scan queue information entries. It represents a single queue element within a scan queue but
     may contain multiple request blocks.
@@ -306,7 +292,7 @@ class QueueInfoEntry(BaseModel):
     active_request_block: RequestBlock | None = None
 
 
-class ScanQueueStatus(BaseModel):
+class ScanQueueStatus(BECSerializable):
     """
     Model for scan queue status information. It represents the status of a single queue, e.g. "primary" or "interception".
 
@@ -464,7 +450,7 @@ class DeviceInstructionMessage(BECMessage):
     parameter: dict
 
 
-class ErrorInfo(BaseModel):
+class ErrorInfo(BECSerializable):
     id: str = Field(default_factory=lambda: str(uuid.uuid4()))
     error_message: str
     compact_error_message: str | None
@@ -511,7 +497,7 @@ class DeviceMessage(BECMessage):
         return v
 
 
-class DeviceAsyncUpdate(BaseModel):
+class DeviceAsyncUpdate(BECSerializable):
     """Model for validating async update metadata sent with device data.
 
     The async update metadata controls how data is aggregated into datasets during a scan:
@@ -656,6 +642,8 @@ class DeviceInfoMessage(BECMessage):
 
 
 class _DeviceDataMixin(BaseModel):
+    """Set config parameters for device messages which use numpy data"""
+
     model_config = ConfigDict(
         ser_json_bytes="base64", val_json_bytes="base64", arbitrary_types_allowed=True
     )
