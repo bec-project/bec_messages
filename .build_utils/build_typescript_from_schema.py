@@ -6,7 +6,15 @@ os.chdir(Path(__file__).parent)
 
 schema_dir = Path("../json_schema")
 output_dir = Path("../typescript/bec-messages/src/generated_message_types")
-for file in os.listdir(schema_dir):
-    if file.endswith(".json"):
-        outfile = file.split(".")[0] + ".d.ts"
-        subprocess.run(["json2ts", str(schema_dir / file), str(output_dir / outfile)])
+names = [f.split(".")[0] for f in os.listdir(schema_dir) if f.endswith(".json")]
+# TODO clear the write directory before writing to it
+for file in names:
+    outfile = file + ".ts"
+    subprocess.run(
+        ["json2ts", str(schema_dir / (file + ".json")), str(output_dir / outfile)]
+    )
+
+with open(output_dir / "index.ts", "w") as f:
+    for file in names:
+        f.write(f'export {{ {file} }} from "./{file}"\n')
+    f.write("\n")
