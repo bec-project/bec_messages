@@ -1,5 +1,18 @@
 {
   "$defs": {
+    "BecCodecInfo": {
+      "properties": {
+        "type_name": {
+          "title": "Type Name",
+          "type": "string"
+        }
+      },
+      "required": [
+        "type_name"
+      ],
+      "title": "BecCodecInfo",
+      "type": "object"
+    },
     "QueueInfoEntry": {
       "description": "Model for scan queue information entries. It represents a single queue element within a scan queue but\nmay contain multiple request blocks.\n\nArgs:\n    queue_id (str): Unique queue ID\n    scan_id (list[str | None]): List of scan IDs for each request block\n    is_scan (list[bool]): List indicating whether each request block is a scan\n    request_blocks (list[RequestBlock]): List of RequestBlock objects representing the requests in the queue entry\n    scan_number (list[int | None]): List of scan numbers for each request block\n    status (str): Current status of the queue entry\n    active_request_block (RequestBlock | None): The currently active request block, if any",
       "properties": {
@@ -63,6 +76,10 @@
             }
           ],
           "default": null
+        },
+        "bec_codec": {
+          "$ref": "#/$defs/BecCodecInfo",
+          "readOnly": true
         }
       },
       "required": [
@@ -71,7 +88,8 @@
         "is_scan",
         "request_blocks",
         "scan_number",
-        "status"
+        "status",
+        "bec_codec"
       ],
       "title": "QueueInfoEntry",
       "type": "object"
@@ -153,6 +171,10 @@
           ],
           "default": null,
           "title": "Report Instructions"
+        },
+        "bec_codec": {
+          "$ref": "#/$defs/BecCodecInfo",
+          "readOnly": true
         }
       },
       "required": [
@@ -162,7 +184,8 @@
         "readout_priority",
         "is_scan",
         "scan_number",
-        "scan_id"
+        "scan_id",
+        "bec_codec"
       ],
       "title": "RequestBlock",
       "type": "object"
@@ -188,11 +211,16 @@
           "default": "primary",
           "title": "Queue",
           "type": "string"
+        },
+        "bec_codec": {
+          "$ref": "#/$defs/BecCodecInfo",
+          "readOnly": true
         }
       },
       "required": [
         "scan_type",
-        "parameter"
+        "parameter",
+        "bec_codec"
       ],
       "title": "ScanQueueMessage",
       "type": "object"
@@ -210,11 +238,16 @@
     "status": {
       "title": "Status",
       "type": "string"
+    },
+    "bec_codec": {
+      "$ref": "#/$defs/BecCodecInfo",
+      "readOnly": true
     }
   },
   "required": [
     "info",
-    "status"
+    "status",
+    "bec_codec"
   ],
   "title": "ScanQueueStatus",
   "type": "object"

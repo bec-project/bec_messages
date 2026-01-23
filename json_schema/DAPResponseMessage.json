@@ -7,9 +7,29 @@
           "additionalProperties": true,
           "title": "Metadata",
           "type": "object"
+        },
+        "bec_codec": {
+          "$ref": "#/$defs/BecCodecInfo",
+          "readOnly": true
         }
       },
+      "required": [
+        "bec_codec"
+      ],
       "title": "BECMessage",
+      "type": "object"
+    },
+    "BecCodecInfo": {
+      "properties": {
+        "type_name": {
+          "title": "Type Name",
+          "type": "string"
+        }
+      },
+      "required": [
+        "type_name"
+      ],
+      "title": "BecCodecInfo",
       "type": "object"
     }
   },
@@ -58,10 +78,15 @@
         }
       ],
       "default": null
+    },
+    "bec_codec": {
+      "$ref": "#/$defs/BecCodecInfo",
+      "readOnly": true
     }
   },
   "required": [
-    "success"
+    "success",
+    "bec_codec"
   ],
   "title": "DAPResponseMessage",
   "type": "object"

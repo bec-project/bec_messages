@@ -1,4 +1,19 @@
 {
+  "$defs": {
+    "BecCodecInfo": {
+      "properties": {
+        "type_name": {
+          "title": "Type Name",
+          "type": "string"
+        }
+      },
+      "required": [
+        "type_name"
+      ],
+      "title": "BecCodecInfo",
+      "type": "object"
+    }
+  },
   "description": "Message type for sending device initialization progress updates\n\nArgs:\n    device (str): Device name.\n    finished (bool): True if the initialization is finished.\n    success (bool): True if the initialization was successful.\n    index (int): Current progress index.\n    total (int): Total number of steps for initialization.\n    metadata (dict, optional): Additional metadata.",
   "properties": {
     "metadata": {
@@ -25,6 +40,10 @@
     "total": {
       "title": "Total",
       "type": "integer"
+    },
+    "bec_codec": {
+      "$ref": "#/$defs/BecCodecInfo",
+      "readOnly": true
     }
   },
   "required": [
@@ -32,7 +51,8 @@
     "finished",
     "success",
     "index",
-    "total"
+    "total",
+    "bec_codec"
   ],
   "title": "DeviceInitializationProgressMessage",
   "type": "object"

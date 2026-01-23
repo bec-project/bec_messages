@@ -1,4 +1,19 @@
 {
+  "$defs": {
+    "BecCodecInfo": {
+      "properties": {
+        "type_name": {
+          "title": "Type Name",
+          "type": "string"
+        }
+      },
+      "required": [
+        "type_name"
+      ],
+      "title": "BecCodecInfo",
+      "type": "object"
+    }
+  },
   "description": "Message type to request aborting a procedure or procedure queue\n\nOne and only one of the args should be supplied.\n    Args:\n        queue (str | None): the procedure queue to abort\n        execution_id (str | None): the procedure execution to abort\n        abort_all (bool | None): abort all procedures if true",
   "properties": {
     "metadata": {
@@ -41,8 +56,15 @@
       ],
       "default": null,
       "title": "Abort All"
+    },
+    "bec_codec": {
+      "$ref": "#/$defs/BecCodecInfo",
+      "readOnly": true
     }
   },
+  "required": [
+    "bec_codec"
+  ],
   "title": "ProcedureAbortMessage",
   "type": "object"
 }

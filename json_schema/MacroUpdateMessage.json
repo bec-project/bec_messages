@@ -1,4 +1,19 @@
 {
+  "$defs": {
+    "BecCodecInfo": {
+      "properties": {
+        "type_name": {
+          "title": "Type Name",
+          "type": "string"
+        }
+      },
+      "required": [
+        "type_name"
+      ],
+      "title": "BecCodecInfo",
+      "type": "object"
+    }
+  },
   "description": "Message for macro updates\n\nArgs:",
   "properties": {
     "metadata": {
@@ -39,10 +54,15 @@
       ],
       "default": null,
       "title": "File Path"
+    },
+    "bec_codec": {
+      "$ref": "#/$defs/BecCodecInfo",
+      "readOnly": true
     }
   },
   "required": [
-    "update_type"
+    "update_type",
+    "bec_codec"
   ],
   "title": "MacroUpdateMessage",
   "type": "object"

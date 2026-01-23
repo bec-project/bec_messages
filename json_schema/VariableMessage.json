@@ -1,4 +1,19 @@
 {
+  "$defs": {
+    "BecCodecInfo": {
+      "properties": {
+        "type_name": {
+          "title": "Type Name",
+          "type": "string"
+        }
+      },
+      "required": [
+        "type_name"
+      ],
+      "title": "BecCodecInfo",
+      "type": "object"
+    }
+  },
   "description": "Message to inform about a global variable\n\nArgs:\n    value (Any): Variable value, can be of any type.\n    metadata (dict, optional): Additional metadata.",
   "properties": {
     "metadata": {
@@ -8,10 +23,15 @@
     },
     "value": {
       "title": "Value"
+    },
+    "bec_codec": {
+      "$ref": "#/$defs/BecCodecInfo",
+      "readOnly": true
     }
   },
   "required": [
-    "value"
+    "value",
+    "bec_codec"
   ],
   "title": "VariableMessage",
   "type": "object"

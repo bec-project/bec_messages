@@ -1,4 +1,19 @@
 {
+  "$defs": {
+    "BecCodecInfo": {
+      "properties": {
+        "type_name": {
+          "title": "Type Name",
+          "type": "string"
+        }
+      },
+      "required": [
+        "type_name"
+      ],
+      "title": "BecCodecInfo",
+      "type": "object"
+    }
+  },
   "description": "Message type for notifying watchers of changes to procedure executions, mainly meant for status helper to consume",
   "properties": {
     "metadata": {
@@ -30,11 +45,16 @@
       ],
       "default": null,
       "title": "Error"
+    },
+    "bec_codec": {
+      "$ref": "#/$defs/BecCodecInfo",
+      "readOnly": true
     }
   },
   "required": [
     "execution_id",
-    "action"
+    "action",
+    "bec_codec"
   ],
   "title": "ProcedureStatusUpdate",
   "type": "object"

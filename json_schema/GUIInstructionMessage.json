@@ -1,4 +1,19 @@
 {
+  "$defs": {
+    "BecCodecInfo": {
+      "properties": {
+        "type_name": {
+          "title": "Type Name",
+          "type": "string"
+        }
+      },
+      "required": [
+        "type_name"
+      ],
+      "title": "BecCodecInfo",
+      "type": "object"
+    }
+  },
   "description": "Message for GUI instructions\n\nArgs:\n    action (str): Instruction to be executed by the GUI\n    metadata (dict, optional): Metadata. Defaults to None.",
   "properties": {
     "metadata": {
@@ -14,11 +29,16 @@
       "additionalProperties": true,
       "title": "Parameter",
       "type": "object"
+    },
+    "bec_codec": {
+      "$ref": "#/$defs/BecCodecInfo",
+      "readOnly": true
     }
   },
   "required": [
     "action",
-    "parameter"
+    "parameter",
+    "bec_codec"
   ],
   "title": "GUIInstructionMessage",
   "type": "object"

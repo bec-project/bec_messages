@@ -1,4 +1,19 @@
 {
+  "$defs": {
+    "BecCodecInfo": {
+      "properties": {
+        "type_name": {
+          "title": "Type Name",
+          "type": "string"
+        }
+      },
+      "required": [
+        "type_name"
+      ],
+      "title": "BecCodecInfo",
+      "type": "object"
+    }
+  },
   "description": "File content message to inform about the content of a file\n\nArgs:\n    file_path (str): Path to the file.\n    data (str): Content of the file.\n    scan_info (dict): Scan information.\n    metadata (dict, optional): Status metadata. Defaults to None.",
   "properties": {
     "metadata": {
@@ -19,12 +34,17 @@
       "additionalProperties": true,
       "title": "Scan Info",
       "type": "object"
+    },
+    "bec_codec": {
+      "$ref": "#/$defs/BecCodecInfo",
+      "readOnly": true
     }
   },
   "required": [
     "file_path",
     "data",
-    "scan_info"
+    "scan_info",
+    "bec_codec"
   ],
   "title": "FileContentMessage",
   "type": "object"

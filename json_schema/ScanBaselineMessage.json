@@ -1,4 +1,19 @@
 {
+  "$defs": {
+    "BecCodecInfo": {
+      "properties": {
+        "type_name": {
+          "title": "Type Name",
+          "type": "string"
+        }
+      },
+      "required": [
+        "type_name"
+      ],
+      "title": "BecCodecInfo",
+      "type": "object"
+    }
+  },
   "description": "Message type for sending scan baseline data from the scan bundler\n\nArgs:\n    scan_id (str): Scan ID.\n    data (dict): Scan baseline data.\n    metadata (dict, optional): Additional metadata.",
   "properties": {
     "metadata": {
@@ -14,11 +29,16 @@
       "additionalProperties": true,
       "title": "Data",
       "type": "object"
+    },
+    "bec_codec": {
+      "$ref": "#/$defs/BecCodecInfo",
+      "readOnly": true
     }
   },
   "required": [
     "scan_id",
-    "data"
+    "data",
+    "bec_codec"
   ],
   "title": "ScanBaselineMessage",
   "type": "object"

@@ -1,4 +1,19 @@
 {
+  "$defs": {
+    "BecCodecInfo": {
+      "properties": {
+        "type_name": {
+          "title": "Type Name",
+          "type": "string"
+        }
+      },
+      "required": [
+        "type_name"
+      ],
+      "title": "BecCodecInfo",
+      "type": "object"
+    }
+  },
   "description": "Message type for sending procedure requests to the server\n\nSent by the API server / user to the procedure_request topic. It will be consumed by the procedure manager.\n    Args:\n        identifier (str): name of the procedure registered with the server\n        queue (str | none): a key for the procedure queue",
   "properties": {
     "metadata": {
@@ -49,10 +64,15 @@
     "execution_id": {
       "title": "Execution Id",
       "type": "string"
+    },
+    "bec_codec": {
+      "$ref": "#/$defs/BecCodecInfo",
+      "readOnly": true
     }
   },
   "required": [
-    "identifier"
+    "identifier",
+    "bec_codec"
   ],
   "title": "ProcedureRequestMessage",
   "type": "object"

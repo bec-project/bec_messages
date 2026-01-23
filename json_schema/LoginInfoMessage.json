@@ -1,4 +1,19 @@
 {
+  "$defs": {
+    "BecCodecInfo": {
+      "properties": {
+        "type_name": {
+          "title": "Type Name",
+          "type": "string"
+        }
+      },
+      "required": [
+        "type_name"
+      ],
+      "title": "BecCodecInfo",
+      "type": "object"
+    }
+  },
   "description": "Message for public login information\n\nArgs:\n    host (str): Hostname\n    deployment (str): Deployment id",
   "properties": {
     "metadata": {
@@ -24,13 +39,18 @@
     "atlas_login": {
       "title": "Atlas Login",
       "type": "boolean"
+    },
+    "bec_codec": {
+      "$ref": "#/$defs/BecCodecInfo",
+      "readOnly": true
     }
   },
   "required": [
     "host",
     "deployment",
     "available_accounts",
-    "atlas_login"
+    "atlas_login",
+    "bec_codec"
   ],
   "title": "LoginInfoMessage",
   "type": "object"

@@ -1,4 +1,19 @@
 {
+  "$defs": {
+    "BecCodecInfo": {
+      "properties": {
+        "type_name": {
+          "title": "Type Name",
+          "type": "string"
+        }
+      },
+      "required": [
+        "type_name"
+      ],
+      "title": "BecCodecInfo",
+      "type": "object"
+    }
+  },
   "description": "Message for DAP requests\n\nArgs:\n    dap_cls (str): DAP class name\n    dap_type (Literal[\"continuous\", \"on_demand\"]) : Different types of DAP modes\n    config (dict): DAP configuration\n    metadata (dict, optional): Metadata. Defaults to None.",
   "properties": {
     "metadata": {
@@ -22,12 +37,17 @@
       "additionalProperties": true,
       "title": "Config",
       "type": "object"
+    },
+    "bec_codec": {
+      "$ref": "#/$defs/BecCodecInfo",
+      "readOnly": true
     }
   },
   "required": [
     "dap_cls",
     "dap_type",
-    "config"
+    "config",
+    "bec_codec"
   ],
   "title": "DAPRequestMessage",
   "type": "object"

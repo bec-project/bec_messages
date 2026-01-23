@@ -1,4 +1,19 @@
 {
+  "$defs": {
+    "BecCodecInfo": {
+      "properties": {
+        "type_name": {
+          "title": "Type Name",
+          "type": "string"
+        }
+      },
+      "required": [
+        "type_name"
+      ],
+      "title": "BecCodecInfo",
+      "type": "object"
+    }
+  },
   "properties": {
     "id": {
       "title": "Id",
@@ -40,12 +55,17 @@
       ],
       "default": null,
       "title": "Device"
+    },
+    "bec_codec": {
+      "$ref": "#/$defs/BecCodecInfo",
+      "readOnly": true
     }
   },
   "required": [
     "error_message",
     "compact_error_message",
-    "exception_type"
+    "exception_type",
+    "bec_codec"
   ],
   "title": "ErrorInfo",
   "type": "object"

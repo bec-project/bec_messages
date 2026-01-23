@@ -1,4 +1,19 @@
 {
+  "$defs": {
+    "BecCodecInfo": {
+      "properties": {
+        "type_name": {
+          "title": "Type Name",
+          "type": "string"
+        }
+      },
+      "required": [
+        "type_name"
+      ],
+      "title": "BecCodecInfo",
+      "type": "object"
+    }
+  },
   "description": "Message type for sending back decisions on the acceptance of requests\n\nArgs:\n    accepted (bool): True if the request was accepted\n    message (str, dict, optional): String or dictionary describing the decision, e.g. \"Invalid request\"\n    metadata (dict, optional): Additional metadata, defaults to None.\n\nExamples:\n    >>> RequestResponseMessage(accepted=True, message=\"Request accepted\")",
   "properties": {
     "metadata": {
@@ -25,10 +40,15 @@
       ],
       "default": null,
       "title": "Message"
+    },
+    "bec_codec": {
+      "$ref": "#/$defs/BecCodecInfo",
+      "readOnly": true
     }
   },
   "required": [
-    "accepted"
+    "accepted",
+    "bec_codec"
   ],
   "title": "RequestResponseMessage",
   "type": "object"

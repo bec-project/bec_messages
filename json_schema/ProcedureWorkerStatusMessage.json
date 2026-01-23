@@ -1,5 +1,18 @@
 {
   "$defs": {
+    "BecCodecInfo": {
+      "properties": {
+        "type_name": {
+          "title": "Type Name",
+          "type": "string"
+        }
+      },
+      "required": [
+        "type_name"
+      ],
+      "title": "BecCodecInfo",
+      "type": "object"
+    },
     "ProcedureWorkerStatus": {
       "enum": [
         1,
@@ -37,11 +50,16 @@
       ],
       "default": null,
       "title": "Current Execution Id"
+    },
+    "bec_codec": {
+      "$ref": "#/$defs/BecCodecInfo",
+      "readOnly": true
     }
   },
   "required": [
     "worker_queue",
-    "status"
+    "status",
+    "bec_codec"
   ],
   "title": "ProcedureWorkerStatusMessage",
   "type": "object"

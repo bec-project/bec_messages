@@ -1,4 +1,19 @@
 {
+  "$defs": {
+    "BecCodecInfo": {
+      "properties": {
+        "type_name": {
+          "title": "Type Name",
+          "type": "string"
+        }
+      },
+      "required": [
+        "type_name"
+      ],
+      "title": "BecCodecInfo",
+      "type": "object"
+    }
+  },
   "description": "Message for endpoint information\n\nArgs:\n    endpoint (str): Endpoint URL\n    metadata (dict, optional): Additional metadata.",
   "properties": {
     "metadata": {
@@ -9,10 +24,15 @@
     "endpoint": {
       "title": "Endpoint",
       "type": "string"
+    },
+    "bec_codec": {
+      "$ref": "#/$defs/BecCodecInfo",
+      "readOnly": true
     }
   },
   "required": [
-    "endpoint"
+    "endpoint",
+    "bec_codec"
   ],
   "title": "EndpointInfoMessage",
   "type": "object"

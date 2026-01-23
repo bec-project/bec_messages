@@ -1,4 +1,19 @@
 {
+  "$defs": {
+    "BecCodecInfo": {
+      "properties": {
+        "type_name": {
+          "title": "Type Name",
+          "type": "string"
+        }
+      },
+      "required": [
+        "type_name"
+      ],
+      "title": "BecCodecInfo",
+      "type": "object"
+    }
+  },
   "description": "Message type for sending device config updates\n\nArgs:\n    action (Literal['add', 'set', 'update', 'reload', 'reset', 'remove', 'cancel']) : Update of the device config.\n    config (dict, or None): Device config (add, set, update) or None (reload, reset).\n    metadata (dict, optional): Additional metadata.",
   "properties": {
     "metadata": {
@@ -39,8 +54,15 @@
       ],
       "default": null,
       "title": "Config"
+    },
+    "bec_codec": {
+      "$ref": "#/$defs/BecCodecInfo",
+      "readOnly": true
     }
   },
+  "required": [
+    "bec_codec"
+  ],
   "title": "DeviceConfigMessage",
   "type": "object"
 }

@@ -1,4 +1,19 @@
 {
+  "$defs": {
+    "BecCodecInfo": {
+      "properties": {
+        "type_name": {
+          "title": "Type Name",
+          "type": "string"
+        }
+      },
+      "required": [
+        "type_name"
+      ],
+      "title": "BecCodecInfo",
+      "type": "object"
+    }
+  },
   "description": "Message for available resources such as scans, data processing plugins etc\n\nArgs:\n    resource (dict, list[dict]): Resource description\n    metadata (dict, optional): Metadata. Defaults to None.",
   "properties": {
     "metadata": {
@@ -21,10 +36,15 @@
         }
       ],
       "title": "Resource"
+    },
+    "bec_codec": {
+      "$ref": "#/$defs/BecCodecInfo",
+      "readOnly": true
     }
   },
   "required": [
-    "resource"
+    "resource",
+    "bec_codec"
   ],
   "title": "AvailableResourceMessage",
   "type": "object"

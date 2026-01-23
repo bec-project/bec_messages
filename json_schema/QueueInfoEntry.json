@@ -1,5 +1,18 @@
 {
   "$defs": {
+    "BecCodecInfo": {
+      "properties": {
+        "type_name": {
+          "title": "Type Name",
+          "type": "string"
+        }
+      },
+      "required": [
+        "type_name"
+      ],
+      "title": "BecCodecInfo",
+      "type": "object"
+    },
     "RequestBlock": {
       "description": "Model for a request block within a scan queue entry. It represents a single request in the scan queue, e.g. a single scan or rpc call.\n\nArgs:\n    msg (ScanQueueMessage): The original scan queue message containing the request details\n    RID (str): Request ID associated with the request\n    scan_motors (list[str]): List of motors involved in the scan\n    readout_priority (dict[Literal[\"monitored\", \"baseline\", \"async\", \"continuous\", \"on_request\"], list[str]]): Readout priority for the request\n    is_scan (bool): True if the request is a scan, False if it is an rpc call\n    scan_number (int | None): Scan number if applicable\n    scan_id (str | None): Scan ID if applicable\n    report_instructions (list[dict] | None): List of report instructions for the scan, if any",
       "properties": {
@@ -77,6 +90,10 @@
           ],
           "default": null,
           "title": "Report Instructions"
+        },
+        "bec_codec": {
+          "$ref": "#/$defs/BecCodecInfo",
+          "readOnly": true
         }
       },
       "required": [
@@ -86,7 +103,8 @@
         "readout_priority",
         "is_scan",
         "scan_number",
-        "scan_id"
+        "scan_id",
+        "bec_codec"
       ],
       "title": "RequestBlock",
       "type": "object"
@@ -112,11 +130,16 @@
           "default": "primary",
           "title": "Queue",
           "type": "string"
+        },
+        "bec_codec": {
+          "$ref": "#/$defs/BecCodecInfo",
+          "readOnly": true
         }
       },
       "required": [
         "scan_type",
-        "parameter"
+        "parameter",
+        "bec_codec"
       ],
       "title": "ScanQueueMessage",
       "type": "object"
@@ -184,6 +207,10 @@
         }
       ],
       "default": null
+    },
+    "bec_codec": {
+      "$ref": "#/$defs/BecCodecInfo",
+      "readOnly": true
     }
   },
   "required": [
@@ -192,7 +219,8 @@
     "is_scan",
     "request_blocks",
     "scan_number",
-    "status"
+    "status",
+    "bec_codec"
   ],
   "title": "QueueInfoEntry",
   "type": "object"

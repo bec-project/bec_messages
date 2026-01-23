@@ -1,4 +1,19 @@
 {
+  "$defs": {
+    "BecCodecInfo": {
+      "properties": {
+        "type_name": {
+          "title": "Type Name",
+          "type": "string"
+        }
+      },
+      "required": [
+        "type_name"
+      ],
+      "title": "BecCodecInfo",
+      "type": "object"
+    }
+  },
   "description": "Message type for sending device info updates from the device server\n\nArgs:\n    device (str): Device name.\n    info (dict): Device info as a dictionary.\n    metadata (dict, optional): Additional metadata.",
   "properties": {
     "metadata": {
@@ -14,11 +29,16 @@
       "additionalProperties": true,
       "title": "Info",
       "type": "object"
+    },
+    "bec_codec": {
+      "$ref": "#/$defs/BecCodecInfo",
+      "readOnly": true
     }
   },
   "required": [
     "device",
-    "info"
+    "info",
+    "bec_codec"
   ],
   "title": "DeviceInfoMessage",
   "type": "object"

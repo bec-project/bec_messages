@@ -1,4 +1,19 @@
 {
+  "$defs": {
+    "BecCodecInfo": {
+      "properties": {
+        "type_name": {
+          "title": "Type Name",
+          "type": "string"
+        }
+      },
+      "required": [
+        "type_name"
+      ],
+      "title": "BecCodecInfo",
+      "type": "object"
+    }
+  },
   "description": "Message for Auto Update configuration\n\nArgs:\n    selected_device (str): the selected device for plotting\n    metadata (dict, optional): Metadata. Defaults to None.",
   "properties": {
     "metadata": {
@@ -9,10 +24,15 @@
     "selected_device": {
       "title": "Selected Device",
       "type": "string"
+    },
+    "bec_codec": {
+      "$ref": "#/$defs/BecCodecInfo",
+      "readOnly": true
     }
   },
   "required": [
-    "selected_device"
+    "selected_device",
+    "bec_codec"
   ],
   "title": "GUIAutoUpdateConfigMessage",
   "type": "object"

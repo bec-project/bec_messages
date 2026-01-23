@@ -32,15 +32,19 @@ NumpyField = Annotated[
 ]
 
 
+class BecCodecInfo(BaseModel):
+    type_name: str
+
+
 class BECSerializable(BaseModel):
     _deserialization_registry: ClassVar[dict[type, Callable[[Any], Any]]] = {
         np.ndarray: numpy_decode_from_b64
     }
 
-    @computed_field(repr=False)
+    @computed_field()
     @property
-    def __bec_codec__(self) -> dict[str, str]:
-        return {"type_name": self.__class__.__name__}
+    def bec_codec(self) -> BecCodecInfo:
+        return BecCodecInfo(type_name=self.__class__.__name__)
 
     @model_validator(mode="before")
     @classmethod

@@ -1,4 +1,19 @@
 {
+  "$defs": {
+    "BecCodecInfo": {
+      "properties": {
+        "type_name": {
+          "title": "Type Name",
+          "type": "string"
+        }
+      },
+      "required": [
+        "type_name"
+      ],
+      "title": "BecCodecInfo",
+      "type": "object"
+    }
+  },
   "description": "Message type for sending scan status updates.\n\nArgs:\n    scan_id (str): Unique scan ID\n    status (Literal[\"open\", \"paused\", \"aborted\", \"halted\", \"closed\"]) : Current scan status\n    scan_number (int, optional): Scan number\n    session_id (str, optional): Session ID\n    num_points (int, optional): Number of points in the scan. Only relevant if the number of points is determined by BEC.\n    scan_name (str, optional): Name of the scan, e.g. 'line_scan'\n    scan_type (Literal[\"step\", \"fly\"], optional): Type of scan\n    dataset_number (int, optional): Dataset number\n    scan_report_devices (list[str], optional): List of devices that are part of the scan report\n    user_metadata (dict, optional): User metadata\n    readout_priority (dict[Literal[\"monitored\", \"baseline\", \"async\", \"continuous\", \"on_request\"], list[str]], optional): Readout priority\n    scan_parameters (dict[Literal[\"exp_time\", \"frames_per_trigger\", \"settling_time\", \"readout_time\"] | str, Any], optional): Scan parameters such as exposure time, frames per trigger, settling time, readout time\n    request_inputs (dict[Literal[\"arg_bundle\", \"inputs\", \"kwargs\"], Any], optional): Scan input\n    info (dict): Dictionary containing additional information about the scan\n    timestamp (float, optional): Timestamp of the message. Defaults to time.time()\n\nExamples:\n    >>> ScanStatusMessage(scan_id=\"1234\", status=\"open\", info={\"positions\": {\"samx\": 0.5, \"samy\": 0.5}})",
   "properties": {
     "metadata": {
@@ -203,12 +218,17 @@
     "timestamp": {
       "title": "Timestamp",
       "type": "number"
+    },
+    "bec_codec": {
+      "$ref": "#/$defs/BecCodecInfo",
+      "readOnly": true
     }
   },
   "required": [
     "scan_id",
     "status",
-    "info"
+    "info",
+    "bec_codec"
   ],
   "title": "ScanStatusMessage",
   "type": "object"

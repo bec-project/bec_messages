@@ -1,4 +1,19 @@
 {
+  "$defs": {
+    "BecCodecInfo": {
+      "properties": {
+        "type_name": {
+          "title": "Type Name",
+          "type": "string"
+        }
+      },
+      "required": [
+        "type_name"
+      ],
+      "title": "BecCodecInfo",
+      "type": "object"
+    }
+  },
   "description": "Model for validating async update metadata sent with device data.\n\nThe async update metadata controls how data is aggregated into datasets during a scan:\n- add: Appends data to the existing dataset along the first axis\n- add_slice: Appends a slice of data at a specific index (max 2D datasets)\n- replace: Replaces the existing dataset (written after scan completion)\n\nArgs:\n    type (Literal[\"add\", \"add_slice\", \"replace\"]): Type of async update operation\n    max_shape (list[int | None], optional): Maximum shape of the dataset. Required for 'add' and 'add_slice' types.\n                                             Use None for unlimited dimensions. E.g., [None] for 1D unlimited.\n                                             None values must only appear at the beginning (e.g., [None, 1024] is valid, [1024, None] is not).\n                                             When all dimensions are None, maximum is 2 dimensions (e.g., [None, None] is valid, [None, None, None] is not).\n                                             For 'add_slice' type, max_shape cannot exceed two dimensions.\n    index (int, optional): Row index for 'add_slice' operations. Required only for 'add_slice' type.\n\nExamples:\n    >>> DeviceAsyncUpdate(type=\"add\", max_shape=[None])\n    >>> DeviceAsyncUpdate(type=\"add\", max_shape=[None, 1024, 1024])\n    >>> DeviceAsyncUpdate(type=\"add_slice\", max_shape=[None, 1024], index=5)\n    >>> DeviceAsyncUpdate(type=\"replace\")",
   "properties": {
     "type": {
@@ -43,10 +58,15 @@
       ],
       "default": null,
       "title": "Index"
+    },
+    "bec_codec": {
+      "$ref": "#/$defs/BecCodecInfo",
+      "readOnly": true
     }
   },
   "required": [
-    "type"
+    "type",
+    "bec_codec"
   ],
   "title": "DeviceAsyncUpdate",
   "type": "object"

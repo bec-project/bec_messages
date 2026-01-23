@@ -1,4 +1,19 @@
 {
+  "$defs": {
+    "BecCodecInfo": {
+      "properties": {
+        "type_name": {
+          "title": "Type Name",
+          "type": "string"
+        }
+      },
+      "required": [
+        "type_name"
+      ],
+      "title": "BecCodecInfo",
+      "type": "object"
+    }
+  },
   "description": "Message type for notifying watchers of changes to queues, mainly meant for GUI to consume",
   "properties": {
     "metadata": {
@@ -17,11 +32,16 @@
       ],
       "title": "Queue Type",
       "type": "string"
+    },
+    "bec_codec": {
+      "$ref": "#/$defs/BecCodecInfo",
+      "readOnly": true
     }
   },
   "required": [
     "queue_name",
-    "queue_type"
+    "queue_type",
+    "bec_codec"
   ],
   "title": "ProcedureQNotifMessage",
   "type": "object"
