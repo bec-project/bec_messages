@@ -1,19 +1,4 @@
 {
-  "$defs": {
-    "BecCodecInfo": {
-      "properties": {
-        "type_name": {
-          "title": "Type Name",
-          "type": "string"
-        }
-      },
-      "required": [
-        "type_name"
-      ],
-      "title": "BecCodecInfo",
-      "type": "object"
-    }
-  },
   "description": "Message for communicating the progress of a long running task\n\nArgs:\n    value (float): Current progress value\n    max_value (float): Maximum progress value\n    done (bool): True if the task is done\n    metadata (dict, optional): Metadata. Defaults to None.",
   "properties": {
     "metadata": {
@@ -34,7 +19,7 @@
       "type": "boolean"
     },
     "bec_codec": {
-      "$ref": "#/$defs/BecCodecInfo",
+      "$ref": "BecCodecInfo.json",
       "readOnly": true
     }
   },

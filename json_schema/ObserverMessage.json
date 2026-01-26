@@ -1,19 +1,4 @@
 {
-  "$defs": {
-    "BecCodecInfo": {
-      "properties": {
-        "type_name": {
-          "title": "Type Name",
-          "type": "string"
-        }
-      },
-      "required": [
-        "type_name"
-      ],
-      "title": "BecCodecInfo",
-      "type": "object"
-    }
-  },
   "description": "Message for observer updates\n\nArgs:\n    observer (list[dict]): List of observer descriptions (dictionaries).\n    metadata (dict, optional): Additional metadata.",
   "properties": {
     "metadata": {
@@ -30,7 +15,7 @@
       "type": "array"
     },
     "bec_codec": {
-      "$ref": "#/$defs/BecCodecInfo",
+      "$ref": "BecCodecInfo.json",
       "readOnly": true
     }
   },

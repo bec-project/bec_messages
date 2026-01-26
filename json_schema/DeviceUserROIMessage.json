@@ -1,19 +1,4 @@
 {
-  "$defs": {
-    "BecCodecInfo": {
-      "properties": {
-        "type_name": {
-          "title": "Type Name",
-          "type": "string"
-        }
-      },
-      "required": [
-        "type_name"
-      ],
-      "title": "BecCodecInfo",
-      "type": "object"
-    }
-  },
   "description": "Message type for sending device user ROI updates to and from the device server.\n\nArgs:\n    device (str): Device name.\n    signal (str): Signal name associated with the ROI.\n    roi_type (str): Type of the ROI, e.g., 'rectangle', 'circle', 'polygon'.\n    roi (dict): Dictionary containing the ROI information, e.g., {\"x\": 100, \"y\": 200, \"width\": 50, \"height\": 50}.\n    metadata (dict, optional): Additional metadata.",
   "properties": {
     "metadata": {
@@ -45,7 +30,7 @@
       "type": "number"
     },
     "bec_codec": {
-      "$ref": "#/$defs/BecCodecInfo",
+      "$ref": "BecCodecInfo.json",
       "readOnly": true
     }
   },

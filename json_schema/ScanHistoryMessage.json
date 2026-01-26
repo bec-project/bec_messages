@@ -1,45 +1,4 @@
 {
-  "$defs": {
-    "BecCodecInfo": {
-      "properties": {
-        "type_name": {
-          "title": "Type Name",
-          "type": "string"
-        }
-      },
-      "required": [
-        "type_name"
-      ],
-      "title": "BecCodecInfo",
-      "type": "object"
-    },
-    "_StoredDataInfo": {
-      "description": "Internal class to store data info for each device in the scan history message\n\nArgs:\n    shape (tuple): Shape of the data for the device.\n    dtype (str, optional): Data type of the data for the device. Defaults to None.",
-      "properties": {
-        "shape": {
-          "items": {
-            "type": "integer"
-          },
-          "title": "Shape",
-          "type": "array"
-        },
-        "dtype": {
-          "anyOf": [
-            {
-              "type": "string"
-            },
-            {
-              "type": "null"
-            }
-          ],
-          "default": null,
-          "title": "Dtype"
-        }
-      },
-      "title": "_StoredDataInfo",
-      "type": "object"
-    }
-  },
   "description": "Message type for sending scan history data from the file writer\n\nArgs:\n    scan_id (str): Scan ID.\n    scan_number (int): Scan number.\n    dataset_number (int): Dataset number.\n    file_path (str): Path to the file.\n    exit_status (Literal[\"closed\", \"aborted\", \"halted\"]): Exit status of the scan.\n    start_time (float): Start time of the scan.\n    end_time (float): End time of the scan.\n    scan_name (str): Name of the scan.\n    num_points (int): Number of points in the scan.\n    request_inputs (dict, optional): Inputs for the scan request, if available.\n    stored_data_info (dict[str, dict[str, _StoredDataInfo]], optional): Information about the stored data for each device in the scan.\n    metadata (dict, optional): Additional metadata.",
   "properties": {
     "metadata": {
@@ -120,7 +79,7 @@
       "title": "Stored Data Info"
     },
     "bec_codec": {
-      "$ref": "#/$defs/BecCodecInfo",
+      "$ref": "BecCodecInfo.json",
       "readOnly": true
     }
   },

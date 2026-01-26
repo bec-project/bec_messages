@@ -1,22 +1,7 @@
 {
-  "$defs": {
-    "BecCodecInfo": {
-      "properties": {
-        "type_name": {
-          "title": "Type Name",
-          "type": "string"
-        }
-      },
-      "required": [
-        "type_name"
-      ],
-      "title": "BecCodecInfo",
-      "type": "object"
-    }
-  },
   "properties": {
     "bec_codec": {
-      "$ref": "#/$defs/BecCodecInfo",
+      "$ref": "BecCodecInfo.json",
       "readOnly": true
     }
   },

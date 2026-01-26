@@ -1,19 +1,4 @@
 {
-  "$defs": {
-    "BecCodecInfo": {
-      "properties": {
-        "type_name": {
-          "title": "Type Name",
-          "type": "string"
-        }
-      },
-      "required": [
-        "type_name"
-      ],
-      "title": "BecCodecInfo",
-      "type": "object"
-    }
-  },
   "description": "Message for public login information\n\nArgs:\n    host (str): Hostname\n    deployment (str): Deployment id",
   "properties": {
     "metadata": {
@@ -41,7 +26,7 @@
       "type": "boolean"
     },
     "bec_codec": {
-      "$ref": "#/$defs/BecCodecInfo",
+      "$ref": "BecCodecInfo.json",
       "readOnly": true
     }
   },

@@ -1,30 +1,4 @@
 {
-  "$defs": {
-    "BecCodecInfo": {
-      "properties": {
-        "type_name": {
-          "title": "Type Name",
-          "type": "string"
-        }
-      },
-      "required": [
-        "type_name"
-      ],
-      "title": "BecCodecInfo",
-      "type": "object"
-    },
-    "ProcedureWorkerStatus": {
-      "enum": [
-        1,
-        2,
-        3,
-        4,
-        5
-      ],
-      "title": "ProcedureWorkerStatus",
-      "type": "integer"
-    }
-  },
   "description": "Message type for sending procedure worker status updates\n\nArgs:\n    worker_queue (str): Worker queue ID\n    status (str): Worker status\n    current_execution_id (str | None): ID of the current job, only allowed for RUNNING",
   "properties": {
     "metadata": {
@@ -37,7 +11,7 @@
       "type": "string"
     },
     "status": {
-      "$ref": "#/$defs/ProcedureWorkerStatus"
+      "$ref": "ProcedureWorkerStatus.json"
     },
     "current_execution_id": {
       "anyOf": [
@@ -52,7 +26,7 @@
       "title": "Current Execution Id"
     },
     "bec_codec": {
-      "$ref": "#/$defs/BecCodecInfo",
+      "$ref": "BecCodecInfo.json",
       "readOnly": true
     }
   },

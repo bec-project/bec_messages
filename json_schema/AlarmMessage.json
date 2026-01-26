@@ -1,76 +1,5 @@
 {
-  "$defs": {
-    "BecCodecInfo": {
-      "properties": {
-        "type_name": {
-          "title": "Type Name",
-          "type": "string"
-        }
-      },
-      "required": [
-        "type_name"
-      ],
-      "title": "BecCodecInfo",
-      "type": "object"
-    },
-    "ErrorInfo": {
-      "properties": {
-        "id": {
-          "title": "Id",
-          "type": "string"
-        },
-        "error_message": {
-          "title": "Error Message",
-          "type": "string"
-        },
-        "compact_error_message": {
-          "anyOf": [
-            {
-              "type": "string"
-            },
-            {
-              "type": "null"
-            }
-          ],
-          "title": "Compact Error Message"
-        },
-        "exception_type": {
-          "title": "Exception Type",
-          "type": "string"
-        },
-        "device": {
-          "anyOf": [
-            {
-              "type": "string"
-            },
-            {
-              "items": {
-                "type": "string"
-              },
-              "type": "array"
-            },
-            {
-              "type": "null"
-            }
-          ],
-          "default": null,
-          "title": "Device"
-        },
-        "bec_codec": {
-          "$ref": "#/$defs/BecCodecInfo",
-          "readOnly": true
-        }
-      },
-      "required": [
-        "error_message",
-        "compact_error_message",
-        "exception_type",
-        "bec_codec"
-      ],
-      "title": "ErrorInfo",
-      "type": "object"
-    }
-  },
+  "$id": "AlarmMessage",
   "description": "Alarm message\n\nArgs:\n    severity (Alarms, Literal[0,1,2]): Severity level (0-2). ALARMS.WARNING = 0, ALARMS.MINOR = 1, ALARMS.MAJOR = 2\n    info (ErrorInfo): Error information.\n    metadata (dict, optional): Additional metadata.",
   "properties": {
     "metadata": {
@@ -83,10 +12,10 @@
       "type": "integer"
     },
     "info": {
-      "$ref": "#/$defs/ErrorInfo"
+      "$ref": "ErrorInfo.json"
     },
     "bec_codec": {
-      "$ref": "#/$defs/BecCodecInfo",
+      "$ref": "BecCodecInfo.json",
       "readOnly": true
     }
   },

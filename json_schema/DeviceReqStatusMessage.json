@@ -1,19 +1,4 @@
 {
-  "$defs": {
-    "BecCodecInfo": {
-      "properties": {
-        "type_name": {
-          "title": "Type Name",
-          "type": "string"
-        }
-      },
-      "required": [
-        "type_name"
-      ],
-      "title": "BecCodecInfo",
-      "type": "object"
-    }
-  },
   "description": "Message type for sending device request status updates from the device server\n\nArgs:\n    device (str): Device name.\n    success (bool): True if the request was successful.\n    request_id (str): Request ID.\n    metadata (dict, optional): Additional metadata.",
   "properties": {
     "metadata": {
@@ -34,7 +19,7 @@
       "type": "string"
     },
     "bec_codec": {
-      "$ref": "#/$defs/BecCodecInfo",
+      "$ref": "BecCodecInfo.json",
       "readOnly": true
     }
   },

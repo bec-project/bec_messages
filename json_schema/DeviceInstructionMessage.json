@@ -1,19 +1,4 @@
 {
-  "$defs": {
-    "BecCodecInfo": {
-      "properties": {
-        "type_name": {
-          "title": "Type Name",
-          "type": "string"
-        }
-      },
-      "required": [
-        "type_name"
-      ],
-      "title": "BecCodecInfo",
-      "type": "object"
-    }
-  },
   "description": "Message type for sending device instructions to the device server\n\nArgs:\n    device (str, list[str], None): Device name, list of device names or None\n    action (Literal[ \"rpc\",\n                    \"set\",\n                    \"read\",\n                    \"kickoff\",\n                    \"complete\",\n                    \"trigger\",\n                    \"stage\",\n                    \"unstage\",\n                    \"pre_scan\",\n                    \"wait\",\n                    \"scan_report_instruction\",\n                    \"open_scan\",\n                    \"baseline_reading\",\n                    \"close_scan\",\n                    \"open_scan_def\",\n                    \"close_scan_def\",\n                    \"publish_data_as_read\",\n                    \"close_scan_group\",\n                    ]) : Device action, note rpc calls can run any method of the device. The function name needs to be specified in parameters['func']\n    parameter (dict): Parameters required for the device action\n    metadata (dict, optional): Metadata to describe the conditions of the device instruction\n\nExamples:\n    >>> DeviceInstructionMessage(device=\"samx\", action=\"stage\", parameter={})",
   "properties": {
     "metadata": {
@@ -68,7 +53,7 @@
       "type": "object"
     },
     "bec_codec": {
-      "$ref": "#/$defs/BecCodecInfo",
+      "$ref": "BecCodecInfo.json",
       "readOnly": true
     }
   },

@@ -1,19 +1,4 @@
 {
-  "$defs": {
-    "BecCodecInfo": {
-      "properties": {
-        "type_name": {
-          "title": "Type Name",
-          "type": "string"
-        }
-      },
-      "required": [
-        "type_name"
-      ],
-      "title": "BecCodecInfo",
-      "type": "object"
-    }
-  },
   "description": "Message type for sending scan requests to the scan queue\n\nSent by the API server / user to the scan_queue topic. It will be consumed by the scan server.\n    Args:\n        scan_type (str): one of the registered scan types; either rpc calls or scan types defined in the scan server\n        parameter (dict): required parameters for the given scan_stype\n        queue (str): either \"primary\" or \"interception\"\n        metadata (dict, optional): additional metadata to describe the scan\n    Examples:\n        >>> ScanQueueMessage(scan_type=\"dscan\", parameter={\"motor1\": \"samx\", \"from_m1:\": -5, \"to_m1\": 5, \"steps_m1\": 10, \"motor2\": \"samy\", \"from_m2\": -5, \"to_m2\": 5, \"steps_m2\": 10, \"exp_time\": 0.1})",
   "properties": {
     "metadata": {
@@ -36,7 +21,7 @@
       "type": "string"
     },
     "bec_codec": {
-      "$ref": "#/$defs/BecCodecInfo",
+      "$ref": "BecCodecInfo.json",
       "readOnly": true
     }
   },

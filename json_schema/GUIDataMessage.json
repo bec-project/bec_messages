@@ -1,19 +1,4 @@
 {
-  "$defs": {
-    "BecCodecInfo": {
-      "properties": {
-        "type_name": {
-          "title": "Type Name",
-          "type": "string"
-        }
-      },
-      "required": [
-        "type_name"
-      ],
-      "title": "BecCodecInfo",
-      "type": "object"
-    }
-  },
   "description": "Message for GUI data, i.e. update for DAP processes or scans\n\nArgs:\n    data (dict): GUI data\n    metadata (dict, optional): Metadata. Defaults to None.",
   "properties": {
     "metadata": {
@@ -27,7 +12,7 @@
       "type": "object"
     },
     "bec_codec": {
-      "$ref": "#/$defs/BecCodecInfo",
+      "$ref": "BecCodecInfo.json",
       "readOnly": true
     }
   },

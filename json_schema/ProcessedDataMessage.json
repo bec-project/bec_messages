@@ -1,19 +1,4 @@
 {
-  "$defs": {
-    "BecCodecInfo": {
-      "properties": {
-        "type_name": {
-          "title": "Type Name",
-          "type": "string"
-        }
-      },
-      "required": [
-        "type_name"
-      ],
-      "title": "BecCodecInfo",
-      "type": "object"
-    }
-  },
   "description": "Message for processed data\n\nArgs:\n    data (dict, list[dict]): Dictionary with processed data or list of dictionaries with processed data.\n    metadata (dict, optional): Metadata. Defaults to None.",
   "properties": {
     "metadata": {
@@ -38,7 +23,7 @@
       "title": "Data"
     },
     "bec_codec": {
-      "$ref": "#/$defs/BecCodecInfo",
+      "$ref": "BecCodecInfo.json",
       "readOnly": true
     }
   },

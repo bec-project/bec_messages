@@ -1,13 +1,17 @@
 import argparse
-from enum import Enum
 import inspect
 import json
 import os
+from enum import Enum
 from pathlib import Path
 from typing import Any, Callable, Iterable, Literal, Self, get_args, get_origin
-import bec_messages
+
 import bec_messages.messages
-from pydantic import BaseModel
+from pydantic import BaseModel, create_model
+
+import bec_messages
+
+JSON_SCHEMA_DIR = Path(__file__).parent.resolve() / "../json_schema"
 
 
 def _get_model_classes() -> Iterable[type[BaseModel]]:
@@ -101,15 +105,57 @@ class ModelGraphManager:
         _node = self.nodes.pop(node.model)
         self.written_nodes[node.model] = WrittenGraphNode(_node, path)
 
+    def written_node_names(self):
+        return (node.__name__ for node in self.written_nodes)
+
     def remove_from_all_parents(self, node: GraphNode):
         for potential_parent in self.nodes.values():
             potential_parent.remove_child(node)
         self.nodes.pop(node.model, None)
 
-    def process_generation(self):
+    def process_generation(self, mode: Literal["display", "rebuild"] = "display"):
         for node in self.leaves():
-            self.set_node_written(node, Path(f"./schema/{node.model.__name__}.json"))
+            filename = (
+                self._write_schema_file(node.model)
+                if mode == "rebuild"
+                else Path(f"./<schema_dir>/{node.model.__name__}.json")
+            )
+
+            self.set_node_written(node, filename)
             self.remove_from_all_parents(node)
+
+    def _write_enum_schema(self, cls: type[Enum], filename: Path):
+        TmpEnumModel = create_model("TmpEnumModel", enum_field=cls)
+        schema = TmpEnumModel.model_json_schema(mode="serialization")
+        with open(filename, "w") as f:
+            f.write(f"{json.dumps(schema["$defs"], indent=2)}\n")
+        return filename
+
+    def _write_schema_file(self, cls: ItemType) -> Path:
+        filename = JSON_SCHEMA_DIR / f"{cls.__name__}.json"
+        if issubclass(cls, Enum):
+            return self._write_enum_schema(cls, filename)
+        with open(filename, "w") as f:
+            try:
+                schema = cls.model_json_schema(mode="serialization")
+            except Exception as e:
+                raise TypeError(f"Schema generation for {cls} failed") from e
+            self.link_schema(schema)
+            f.write(f"{json.dumps(schema, indent=2)}\n")
+        return filename
+
+    def link_schema(self, schema: dict[str, dict]):
+        defs = schema.pop("$defs", None)
+        if defs is not None:
+            for defn in defs.keys():
+                assert defn in list(
+                    self.written_node_names()
+                ), f"No written schema for def: {defn}!"
+                for prop in schema["properties"]:
+                    if "$ref" in schema["properties"][prop] and schema["properties"][
+                        prop
+                    ]["$ref"].endswith(defn):
+                        schema["properties"][prop]["$ref"] = f"{defn}.json"
 
     def print_state(self):
         print("\nUnwritten nodes:")
@@ -120,37 +166,32 @@ class ModelGraphManager:
             print(f"    {node}")
 
 
-def _json_schema_dir():
-    return Path(__file__).parent.resolve() / "../json_schema"
-
-
 def _list_all_schema_files():
-    return (f for f in os.listdir(_json_schema_dir()) if f != "README.md")
+    return (f for f in os.listdir(JSON_SCHEMA_DIR) if f != "README.md")
 
 
-def _remove_all():
+def _remove_all_schema_files():
     for f in _list_all_schema_files():
-        os.remove(_json_schema_dir() / f)
-
-
-def _write_schema_file(cls: type[BaseModel]):
-    with open(_json_schema_dir() / f"{cls.__name__}.json", "w") as f:
-        try:
-            schema = cls.model_json_schema(mode="serialization")
-        except Exception as e:
-            raise TypeError(f"Schema generation for {cls} failed") from e
-        f.write(f"{json.dumps(schema, indent=2)}\n")
-
-
-def _write_schema_files(classes: Iterable[type[BaseModel]]):
-    for cls in classes:
-        _write_schema_file(cls)
+        os.remove(JSON_SCHEMA_DIR / f)
 
 
 def _rebuild():
     """Rebuild the BEC message schema."""
-    _remove_all()
-    _write_schema_files(_get_model_classes())
+    _remove_all_schema_files()
+    clss = list(_get_model_classes())
+    for cls in clss:
+        cls.model_rebuild()
+    dag = ModelGraphManager(clss)
+
+    i = 0
+    while len(dag.nodes) > 0:
+        print(f"\n----------------------------------------------------------\n")
+        print(f"\nGeneration {i} leaves:")
+        for leaf in dag.leaves():
+            print(f"    {leaf}")
+        dag.process_generation(mode="rebuild")
+        dag.print_state()
+        i += 1
 
 
 def _check():
@@ -168,6 +209,7 @@ def _display_graph():
 
     i = 0
     while len(dag.nodes) > 0:
+        print(f"\n----------------------------------------------------------\n")
         print(f"\nGeneration {i} leaves:")
         for leaf in dag.leaves():
             print(f"    {leaf}")

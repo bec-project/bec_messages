@@ -1,19 +1,4 @@
 {
-  "$defs": {
-    "BecCodecInfo": {
-      "properties": {
-        "type_name": {
-          "title": "Type Name",
-          "type": "string"
-        }
-      },
-      "required": [
-        "type_name"
-      ],
-      "title": "BecCodecInfo",
-      "type": "object"
-    }
-  },
   "description": "Message type for sending scan queue order modifications\n\nArgs:\n    scan_id (str): Unique scan ID\n    action (str): One of the actions defined in ACTIONS: (\"move_up\", \"move_down\", \"move_top\", \"move_bottom\", \"move_to\")\n    queue (str): Defaults to \"primary\" queue. The name of the queue that receives the modification.\n    metadata (dict, optional): Additional metadata to describe and identify the scan.\n\nExamples:\n    >>> ScanQueueOrderMessage(scan_id=scan_id, action=\"move_up\")",
   "properties": {
     "metadata": {
@@ -54,7 +39,7 @@
       "title": "Target Position"
     },
     "bec_codec": {
-      "$ref": "#/$defs/BecCodecInfo",
+      "$ref": "BecCodecInfo.json",
       "readOnly": true
     }
   },

@@ -1,19 +1,4 @@
 {
-  "$defs": {
-    "BecCodecInfo": {
-      "properties": {
-        "type_name": {
-          "title": "Type Name",
-          "type": "string"
-        }
-      },
-      "required": [
-        "type_name"
-      ],
-      "title": "BecCodecInfo",
-      "type": "object"
-    }
-  },
   "description": "Message for service metrics\n\nArgs:\n    name (str): Name of the service.\n    metrics (dict): Dictionary with service metrics.\n    metadata (dict, optional): Additional metadata.",
   "properties": {
     "metadata": {
@@ -31,7 +16,7 @@
       "type": "object"
     },
     "bec_codec": {
-      "$ref": "#/$defs/BecCodecInfo",
+      "$ref": "BecCodecInfo.json",
       "readOnly": true
     }
   },

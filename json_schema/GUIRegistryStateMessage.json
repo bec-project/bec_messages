@@ -1,19 +1,4 @@
 {
-  "$defs": {
-    "BecCodecInfo": {
-      "properties": {
-        "type_name": {
-          "title": "Type Name",
-          "type": "string"
-        }
-      },
-      "required": [
-        "type_name"
-      ],
-      "title": "BecCodecInfo",
-      "type": "object"
-    }
-  },
   "description": "Message for GUI registry state. The dictionary contains the state of the GUI registry.\n\nArgs:\n    state (dict[str, dict[Literal[\"gui_id\", \"name\", \"widget_class\", \"config\", \"__rpc__\", \"container_proxy\"], str | bool | dict | None]): GUI registry state\n    metadata (dict, optional): Metadata. Defaults to None.",
   "properties": {
     "metadata": {
@@ -57,7 +42,7 @@
       "type": "object"
     },
     "bec_codec": {
-      "$ref": "#/$defs/BecCodecInfo",
+      "$ref": "BecCodecInfo.json",
       "readOnly": true
     }
   },
