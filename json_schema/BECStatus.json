@@ -1,0 +1,13 @@
+{
+  "BECStatus": {
+    "description": "BEC status enum",
+    "enum": [
+      2,
+      1,
+      0,
+      -1
+    ],
+    "title": "BECStatus",
+    "type": "integer"
+  }
+}

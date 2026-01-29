@@ -1,4 +1,19 @@
 {
+  "$defs": {
+    "BecCodecInfo": {
+      "properties": {
+        "type_name": {
+          "title": "Type Name",
+          "type": "string"
+        }
+      },
+      "required": [
+        "type_name"
+      ],
+      "title": "BecCodecInfo",
+      "type": "object"
+    }
+  },
   "description": "Message type for sending information to the client\nArgs:\n    message (str): message to the client\n    show_asap (bool, optional): True if the message should be shown immediately. Defaults to True\n    # Note: The option show_asap = True/False is temporary disabled until a decision is made on how to handle it. TODO #286\n    RID (str, optional): Request ID forwarded from the service, if available will be used to filter on the client site. Defaults to None.\n    source (str, Literal[\n        \"bec_ipython_client\",\n        \"scan_server\",\n        \"device_server\",\n        \"scan_bundler\",\n        \"file_writer\",\n        \"scihub\",\n        \"dap\",\n        None]\n        : Source of the message. Defaults to None.\n    scope (str, optional): Scope of the message; Defaults to None. One can follow\n                           a pattern to filter afterwards for specific client info; e.g. \"scan\", \"rotation\"\n    severity (int, optional): severity level of the message (0: INFO, 1: WARNING, 2: ERROR); Defaults to 0\n    expire (float, optional): Time in seconds after which the message expires and should not be shown anymore.\n                              Defaults to 60 seconds. Set it to 0 to never expire the message.",
   "properties": {
     "metadata": {
@@ -65,7 +80,7 @@
       "type": "number"
     },
     "bec_codec": {
-      "$ref": "BecCodecInfo.json",
+      "$ref": "#/$defs/BecCodecInfo",
       "readOnly": true
     }
   },

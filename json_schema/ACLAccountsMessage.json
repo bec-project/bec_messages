@@ -1,4 +1,19 @@
 {
+  "$defs": {
+    "BecCodecInfo": {
+      "properties": {
+        "type_name": {
+          "title": "Type Name",
+          "type": "string"
+        }
+      },
+      "required": [
+        "type_name"
+      ],
+      "title": "BecCodecInfo",
+      "type": "object"
+    }
+  },
   "description": "Message for ACL accounts\n\nArgs:\n    accounts (dict): ACL accounts",
   "properties": {
     "metadata": {
@@ -36,7 +51,7 @@
       "type": "object"
     },
     "bec_codec": {
-      "$ref": "BecCodecInfo.json",
+      "$ref": "#/$defs/BecCodecInfo",
       "readOnly": true
     }
   },

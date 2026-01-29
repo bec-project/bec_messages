@@ -1,4 +1,19 @@
 {
+  "$defs": {
+    "BecCodecInfo": {
+      "properties": {
+        "type_name": {
+          "title": "Type Name",
+          "type": "string"
+        }
+      },
+      "required": [
+        "type_name"
+      ],
+      "title": "BecCodecInfo",
+      "type": "object"
+    }
+  },
   "description": "Message for GUI configuration\n\nArgs:\n    config (dict): GUI configuration, check widgets for more details\n    metadata (dict, optional): Metadata. Defaults to None.",
   "properties": {
     "metadata": {
@@ -12,7 +27,7 @@
       "type": "object"
     },
     "bec_codec": {
-      "$ref": "BecCodecInfo.json",
+      "$ref": "#/$defs/BecCodecInfo",
       "readOnly": true
     }
   },

@@ -1,0 +1,26 @@
+{
+  "description": "Internal class to store data info for each device in the scan history message\n\nArgs:\n    shape (tuple): Shape of the data for the device.\n    dtype (str, optional): Data type of the data for the device. Defaults to None.",
+  "properties": {
+    "shape": {
+      "items": {
+        "type": "integer"
+      },
+      "title": "Shape",
+      "type": "array"
+    },
+    "dtype": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Dtype"
+    }
+  },
+  "title": "_StoredDataInfo",
+  "type": "object"
+}

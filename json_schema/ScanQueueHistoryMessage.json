@@ -1,4 +1,231 @@
 {
+  "$defs": {
+    "BecCodecInfo": {
+      "properties": {
+        "type_name": {
+          "title": "Type Name",
+          "type": "string"
+        }
+      },
+      "required": [
+        "type_name"
+      ],
+      "title": "BecCodecInfo",
+      "type": "object"
+    },
+    "QueueInfoEntry": {
+      "description": "Model for scan queue information entries. It represents a single queue element within a scan queue but\nmay contain multiple request blocks.\n\nArgs:\n    queue_id (str): Unique queue ID\n    scan_id (list[str | None]): List of scan IDs for each request block\n    is_scan (list[bool]): List indicating whether each request block is a scan\n    request_blocks (list[RequestBlock]): List of RequestBlock objects representing the requests in the queue entry\n    scan_number (list[int | None]): List of scan numbers for each request block\n    status (str): Current status of the queue entry\n    active_request_block (RequestBlock | None): The currently active request block, if any",
+      "properties": {
+        "queue_id": {
+          "title": "Queue Id",
+          "type": "string"
+        },
+        "scan_id": {
+          "items": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "title": "Scan Id",
+          "type": "array"
+        },
+        "is_scan": {
+          "items": {
+            "type": "boolean"
+          },
+          "title": "Is Scan",
+          "type": "array"
+        },
+        "request_blocks": {
+          "items": {
+            "$ref": "#/$defs/RequestBlock"
+          },
+          "title": "Request Blocks",
+          "type": "array"
+        },
+        "scan_number": {
+          "items": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "title": "Scan Number",
+          "type": "array"
+        },
+        "status": {
+          "title": "Status",
+          "type": "string"
+        },
+        "active_request_block": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/RequestBlock"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "bec_codec": {
+          "$ref": "#/$defs/BecCodecInfo",
+          "readOnly": true
+        }
+      },
+      "required": [
+        "queue_id",
+        "scan_id",
+        "is_scan",
+        "request_blocks",
+        "scan_number",
+        "status",
+        "bec_codec"
+      ],
+      "title": "QueueInfoEntry",
+      "type": "object"
+    },
+    "RequestBlock": {
+      "description": "Model for a request block within a scan queue entry. It represents a single request in the scan queue, e.g. a single scan or rpc call.\n\nArgs:\n    msg (ScanQueueMessage): The original scan queue message containing the request details\n    RID (str): Request ID associated with the request\n    scan_motors (list[str]): List of motors involved in the scan\n    readout_priority (dict[Literal[\"monitored\", \"baseline\", \"async\", \"continuous\", \"on_request\"], list[str]]): Readout priority for the request\n    is_scan (bool): True if the request is a scan, False if it is an rpc call\n    scan_number (int | None): Scan number if applicable\n    scan_id (str | None): Scan ID if applicable\n    report_instructions (list[dict] | None): List of report instructions for the scan, if any",
+      "properties": {
+        "msg": {
+          "$ref": "#/$defs/ScanQueueMessage"
+        },
+        "RID": {
+          "title": "Rid",
+          "type": "string"
+        },
+        "scan_motors": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Scan Motors",
+          "type": "array"
+        },
+        "readout_priority": {
+          "additionalProperties": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array"
+          },
+          "propertyNames": {
+            "enum": [
+              "monitored",
+              "baseline",
+              "async",
+              "continuous",
+              "on_request"
+            ]
+          },
+          "title": "Readout Priority",
+          "type": "object"
+        },
+        "is_scan": {
+          "title": "Is Scan",
+          "type": "boolean"
+        },
+        "scan_number": {
+          "anyOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Scan Number"
+        },
+        "scan_id": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Scan Id"
+        },
+        "report_instructions": {
+          "anyOf": [
+            {
+              "items": {
+                "additionalProperties": true,
+                "type": "object"
+              },
+              "type": "array"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Report Instructions"
+        },
+        "bec_codec": {
+          "$ref": "#/$defs/BecCodecInfo",
+          "readOnly": true
+        }
+      },
+      "required": [
+        "msg",
+        "RID",
+        "scan_motors",
+        "readout_priority",
+        "is_scan",
+        "scan_number",
+        "scan_id",
+        "bec_codec"
+      ],
+      "title": "RequestBlock",
+      "type": "object"
+    },
+    "ScanQueueMessage": {
+      "description": "Message type for sending scan requests to the scan queue\n\nSent by the API server / user to the scan_queue topic. It will be consumed by the scan server.\n    Args:\n        scan_type (str): one of the registered scan types; either rpc calls or scan types defined in the scan server\n        parameter (dict): required parameters for the given scan_stype\n        queue (str): either \"primary\" or \"interception\"\n        metadata (dict, optional): additional metadata to describe the scan\n    Examples:\n        >>> ScanQueueMessage(scan_type=\"dscan\", parameter={\"motor1\": \"samx\", \"from_m1:\": -5, \"to_m1\": 5, \"steps_m1\": 10, \"motor2\": \"samy\", \"from_m2\": -5, \"to_m2\": 5, \"steps_m2\": 10, \"exp_time\": 0.1})",
+      "properties": {
+        "metadata": {
+          "additionalProperties": true,
+          "title": "Metadata",
+          "type": "object"
+        },
+        "scan_type": {
+          "title": "Scan Type",
+          "type": "string"
+        },
+        "parameter": {
+          "additionalProperties": true,
+          "title": "Parameter",
+          "type": "object"
+        },
+        "queue": {
+          "default": "primary",
+          "title": "Queue",
+          "type": "string"
+        },
+        "bec_codec": {
+          "$ref": "#/$defs/BecCodecInfo",
+          "readOnly": true
+        }
+      },
+      "required": [
+        "scan_type",
+        "parameter",
+        "bec_codec"
+      ],
+      "title": "ScanQueueMessage",
+      "type": "object"
+    }
+  },
   "description": "Sent after removal from the active queue. Contains information about the scan.\n\nCalled by the ScanWorker after processing the QueueInstructionItem. It can be checked by any service.\n\nArgs:\n    status (str): Current scan status\n    queue_id (str): Unique queue ID\n    info (QueueInfoEntry): Information about the scan in the queue\n    queue (str): Defaults to \"primary\" queue. Information about the queue the scan was in.\n    metadata (dict, optional): Additional metadata to describe the scan\n\nExamples:\n    >>> ScanQueueHistoryMessage(status=\"open\", queue_id=\"1234\", info={\"positions\": {\"samx\": 0.5, \"samy\": 0.5}})",
   "properties": {
     "metadata": {
@@ -15,7 +242,7 @@
       "type": "string"
     },
     "info": {
-      "$ref": "QueueInfoEntry.json"
+      "$ref": "#/$defs/QueueInfoEntry"
     },
     "queue": {
       "default": "primary",
@@ -23,7 +250,7 @@
       "type": "string"
     },
     "bec_codec": {
-      "$ref": "BecCodecInfo.json",
+      "$ref": "#/$defs/BecCodecInfo",
       "readOnly": true
     }
   },

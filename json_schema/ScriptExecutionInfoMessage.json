@@ -1,4 +1,19 @@
 {
+  "$defs": {
+    "BecCodecInfo": {
+      "properties": {
+        "type_name": {
+          "title": "Type Name",
+          "type": "string"
+        }
+      },
+      "required": [
+        "type_name"
+      ],
+      "title": "BecCodecInfo",
+      "type": "object"
+    }
+  },
   "description": "Message for script execution\n\nArgs:\n    script_id (str): Unique identifier for the script\n    status (Literal[\"running\", \"completed\", \"failed\", \"aborted\"]): Execution status\n    current_lines (list[int], optional): Current line numbers being executed. Defaults to None.\n    traceback (str, optional): Traceback information. Defaults to None.",
   "properties": {
     "metadata": {
@@ -48,7 +63,7 @@
       "title": "Traceback"
     },
     "bec_codec": {
-      "$ref": "BecCodecInfo.json",
+      "$ref": "#/$defs/BecCodecInfo",
       "readOnly": true
     }
   },

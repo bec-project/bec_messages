@@ -1,0 +1,13 @@
+{
+  "properties": {
+    "type_name": {
+      "title": "Type Name",
+      "type": "string"
+    }
+  },
+  "required": [
+    "type_name"
+  ],
+  "title": "BecCodecInfo",
+  "type": "object"
+}

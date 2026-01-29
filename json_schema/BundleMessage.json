@@ -1,4 +1,19 @@
 {
+  "$defs": {
+    "BecCodecInfo": {
+      "properties": {
+        "type_name": {
+          "title": "Type Name",
+          "type": "string"
+        }
+      },
+      "required": [
+        "type_name"
+      ],
+      "title": "BecCodecInfo",
+      "type": "object"
+    }
+  },
   "description": "Message type to send a bundle of BECMessages.\n\nUsed to bundle together various messages, i.e. used to emit data in the scan bundler.\n\nArgs:\n    messages (list): List of BECMessage objects that are bundled together\n    metadata (dict, optional): Additional metadata to describe the scan\n\nExamples:\n    >>> BundleMessage(messages=[ScanQueueMessage(...), ScanStatusMessage(...)], metadata = {...})",
   "properties": {
     "metadata": {
@@ -12,7 +27,7 @@
       "type": "array"
     },
     "bec_codec": {
-      "$ref": "BecCodecInfo.json",
+      "$ref": "#/$defs/BecCodecInfo",
       "readOnly": true
     }
   },

@@ -145,17 +145,18 @@ class ModelGraphManager:
         return filename
 
     def link_schema(self, schema: dict[str, dict]):
-        defs = schema.pop("$defs", None)
-        if defs is not None:
-            for defn in defs.keys():
-                assert defn in list(
-                    self.written_node_names()
-                ), f"No written schema for def: {defn}!"
-                for prop in schema["properties"]:
-                    if "$ref" in schema["properties"][prop] and schema["properties"][
-                        prop
-                    ]["$ref"].endswith(defn):
-                        schema["properties"][prop]["$ref"] = f"{defn}.json"
+        ...
+        # defs = schema.pop("$defs", None)
+        # if defs is not None:
+        #     for defn in defs.keys():
+        #         assert defn in list(
+        #             self.written_node_names()
+        #         ), f"No written schema for def: {defn}!"
+        #         for prop in schema["properties"]:
+        #             if "$ref" in schema["properties"][prop] and schema["properties"][
+        #                 prop
+        #             ]["$ref"].endswith(defn):
+        #                 schema["properties"][prop]["$ref"] = f"{defn}.json"
 
     def print_state(self):
         print("\nUnwritten nodes:")

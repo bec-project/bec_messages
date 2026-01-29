@@ -1,4 +1,19 @@
 {
+  "$defs": {
+    "BecCodecInfo": {
+      "properties": {
+        "type_name": {
+          "title": "Type Name",
+          "type": "string"
+        }
+      },
+      "required": [
+        "type_name"
+      ],
+      "title": "BecCodecInfo",
+      "type": "object"
+    }
+  },
   "description": "Log message\n\nArgs:\n    log_type (Literal[\"trace\", \"debug\", \"info\", \"success\", \"warning\", \"error\", \"critical\", \"console_log\"]) : Log type.\n    log_msg (dict or str): Log message.\n    metadata (dict, optional): Additional metadata.",
   "properties": {
     "metadata": {
@@ -33,7 +48,7 @@
       "title": "Log Msg"
     },
     "bec_codec": {
-      "$ref": "BecCodecInfo.json",
+      "$ref": "#/$defs/BecCodecInfo",
       "readOnly": true
     }
   },

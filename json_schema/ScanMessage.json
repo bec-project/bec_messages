@@ -1,4 +1,19 @@
 {
+  "$defs": {
+    "BecCodecInfo": {
+      "properties": {
+        "type_name": {
+          "title": "Type Name",
+          "type": "string"
+        }
+      },
+      "required": [
+        "type_name"
+      ],
+      "title": "BecCodecInfo",
+      "type": "object"
+    }
+  },
   "description": "Message type for sending scan segment data from the scan bundler\n\nArgs:\n    point_id (int): Point ID from the scan segment.\n    scan_id (str): Scan ID.\n    data (dict): Scan segment data.\n    metadata (dict, optional): Additional metadata.",
   "properties": {
     "metadata": {
@@ -20,7 +35,7 @@
       "type": "object"
     },
     "bec_codec": {
-      "$ref": "BecCodecInfo.json",
+      "$ref": "#/$defs/BecCodecInfo",
       "readOnly": true
     }
   },

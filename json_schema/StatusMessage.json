@@ -1,4 +1,30 @@
 {
+  "$defs": {
+    "BECStatus": {
+      "description": "BEC status enum",
+      "enum": [
+        2,
+        1,
+        0,
+        -1
+      ],
+      "title": "BECStatus",
+      "type": "integer"
+    },
+    "BecCodecInfo": {
+      "properties": {
+        "type_name": {
+          "title": "Type Name",
+          "type": "string"
+        }
+      },
+      "required": [
+        "type_name"
+      ],
+      "title": "BecCodecInfo",
+      "type": "object"
+    }
+  },
   "description": "Status message\n\nArgs:\n    name (str): Name of the status.\n    status (BECStatus): Value of the BECStatus enum (RUNNING = 2,  BUSY = 1, IDLE = 0, ERROR = -1).\n    info (dict): Status info.\n    metadata (dict, optional): Additional metadata.",
   "properties": {
     "metadata": {
@@ -11,7 +37,7 @@
       "type": "string"
     },
     "status": {
-      "$ref": "BECStatus.json"
+      "$ref": "#/$defs/BECStatus"
     },
     "info": {
       "additionalProperties": true,
@@ -19,7 +45,7 @@
       "type": "object"
     },
     "bec_codec": {
-      "$ref": "BecCodecInfo.json",
+      "$ref": "#/$defs/BecCodecInfo",
       "readOnly": true
     }
   },

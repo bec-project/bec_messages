@@ -1,4 +1,19 @@
 {
+  "$defs": {
+    "BecCodecInfo": {
+      "properties": {
+        "type_name": {
+          "title": "Type Name",
+          "type": "string"
+        }
+      },
+      "required": [
+        "type_name"
+      ],
+      "title": "BecCodecInfo",
+      "type": "object"
+    }
+  },
   "description": "Message type for sending device RPC return values from the device server\n\nArgs:\n    device (str): Device name.\n    return_val (Any): Return value of the RPC call.\n    out (str or dict): Output of the RPC call.\n    success (bool, optional): True if the RPC call was successful. Defaults to True.\n    metadata (dict, optional): Additional metadata.",
   "properties": {
     "metadata": {
@@ -31,7 +46,7 @@
       "type": "boolean"
     },
     "bec_codec": {
-      "$ref": "BecCodecInfo.json",
+      "$ref": "#/$defs/BecCodecInfo",
       "readOnly": true
     }
   },

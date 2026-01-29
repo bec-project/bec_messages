@@ -1,4 +1,19 @@
 {
+  "$defs": {
+    "BecCodecInfo": {
+      "properties": {
+        "type_name": {
+          "title": "Type Name",
+          "type": "string"
+        }
+      },
+      "required": [
+        "type_name"
+      ],
+      "title": "BecCodecInfo",
+      "type": "object"
+    }
+  },
   "description": "Message for raw data that was not encoded as a BECMessage.\nThe data dictionary is simply the raw data loaded using json.loads\n\nArgs:\n    data (Any): Raw data\n    metadata (dict, optional): Metadata. Defaults to None.",
   "properties": {
     "metadata": {
@@ -10,7 +25,7 @@
       "title": "Data"
     },
     "bec_codec": {
-      "$ref": "BecCodecInfo.json",
+      "$ref": "#/$defs/BecCodecInfo",
       "readOnly": true
     }
   },
