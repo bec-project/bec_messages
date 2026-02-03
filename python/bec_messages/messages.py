@@ -5,14 +5,16 @@ import time
 import uuid
 from copy import deepcopy
 from enum import Enum, auto
+from importlib.metadata import PackageNotFoundError
+from importlib.metadata import version as importlib_version
 from typing import Any, ClassVar, Literal, Self
 from uuid import uuid4
 
 import numpy as np
+from bec_lib.metadata_schema import get_metadata_schema_for_scan
 from jsonschema import ValidationError
 from pydantic import BaseModel, ConfigDict, Field, field_validator, model_validator
 
-from bec_lib.metadata_schema import get_metadata_schema_for_scan
 from bec_messages.bec_serializable import BECSerializable, NumpyField
 
 
@@ -930,13 +932,48 @@ class AlarmMessage(BECMessage):
     info: ErrorInfo
 
 
+class ServiceVersions(BECSerializable):
+    _versions: ClassVar[Self | None] = None
+
+    bec_lib: str
+    bec_server: str
+    bec_ipython_client: str
+    bec_widgets: str
+
+    @classmethod
+    def _get_version_numbers(cls):
+        if cls._versions:
+            return cls._versions
+
+        def _get_safe_version(package: str) -> str:
+            try:
+                return importlib_version(package)
+            except PackageNotFoundError:
+                return "Not found"
+
+        cls._versions = cls.model_validate(
+            {
+                pkg: _get_safe_version(pkg)
+                for pkg in ["bec_lib", "bec_server", "bec_ipython_client", "bec_widgets"]
+            }
+        )
+        return cls._versions
+
+
+class ServiceInfo(BECSerializable):
+    user: str
+    hostname: str
+    timestamp: float = Field(default_factory=time.time)
+    versions: ServiceVersions = Field(default_factory=ServiceVersions._get_version_numbers)
+
+
 class StatusMessage(BECMessage):
     """Status message
 
     Args:
         name (str): Name of the status.
         status (BECStatus): Value of the BECStatus enum (RUNNING = 2,  BUSY = 1, IDLE = 0, ERROR = -1).
-        info (dict): Status info.
+        info (ServiceInfo | dict): Status info.
         metadata (dict, optional): Additional metadata.
 
     """
@@ -944,7 +981,7 @@ class StatusMessage(BECMessage):
     msg_type: ClassVar[str] = "status_message"
     name: str
     status: BECStatus
-    info: dict
+    info: ServiceInfo | dict
 
 
 class FileMessage(BECMessage):

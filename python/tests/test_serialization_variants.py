@@ -8,11 +8,8 @@ import jsonschema
 import msgpack
 import numpy as np
 import pytest
-from pydantic import BaseModel
-from pydantic.fields import FieldInfo
-from pydantic_core import PydanticUndefined
-
 from bec_messages import messages
+from bec_messages.bec_serializable import BECSerializable
 from bec_messages.messages import (
     BECMessage,
     BundleMessage,
@@ -27,6 +24,9 @@ from bec_messages.messages import (
     ScanQueueStatus,
     ScanQueueStatusMessage,
 )
+from pydantic import BaseModel
+from pydantic.fields import FieldInfo
+from pydantic_core import PydanticUndefined
 
 _T = TypeVar("_T")
 default_vals = {
@@ -79,6 +79,8 @@ def _default_var(c: type, k: str, i: FieldInfo):
         args = get_args(t)
         if NoneType in args:
             return None
+        if issubclass(args[0], BECSerializable):
+            return _instantiate_with_defaults(args[0])
         return args[0]()
     if type(t) is type(Literal[""]):
         return get_args(t)[0]
